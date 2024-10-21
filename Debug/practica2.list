@@ -1,0 +1,3160 @@
+
+practica2.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .isr_vector   000001ac  08000000  08000000  00010000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .text         00001710  080001ac  080001ac  000101ac  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .rodata       00000124  080018bc  080018bc  000118bc  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .ARM.extab    00000000  080019e0  080019e0  00020004  2**0
+                  CONTENTS
+  4 .ARM          00000000  080019e0  080019e0  00020004  2**0
+                  CONTENTS
+  5 .preinit_array 00000000  080019e0  080019e0  00020004  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .init_array   00000004  080019e0  080019e0  000119e0  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  7 .fini_array   00000004  080019e4  080019e4  000119e4  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  8 .data         00000004  20000000  080019e8  00020000  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  9 .ccmram       00000000  10000000  10000000  00020004  2**0
+                  CONTENTS
+ 10 .bss          00000030  20000004  20000004  00020004  2**2
+                  ALLOC
+ 11 ._user_heap_stack 00000604  20000034  20000034  00020004  2**0
+                  ALLOC
+ 12 .ARM.attributes 00000030  00000000  00000000  00020004  2**0
+                  CONTENTS, READONLY
+ 13 .debug_info   00001576  00000000  00000000  00020034  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_abbrev 0000040f  00000000  00000000  000215aa  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_aranges 000001b8  00000000  00000000  000219c0  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_ranges 00000190  00000000  00000000  00021b78  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .debug_macro  0001a21c  00000000  00000000  00021d08  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 18 .debug_line   00001782  00000000  00000000  0003bf24  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 19 .debug_str    00091a8c  00000000  00000000  0003d6a6  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 20 .comment      00000050  00000000  00000000  000cf132  2**0
+                  CONTENTS, READONLY
+ 21 .debug_frame  000005e0  00000000  00000000  000cf184  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+080001ac <__do_global_dtors_aux>:
+ 80001ac:	b510      	push	{r4, lr}
+ 80001ae:	4c05      	ldr	r4, [pc, #20]	; (80001c4 <__do_global_dtors_aux+0x18>)
+ 80001b0:	7823      	ldrb	r3, [r4, #0]
+ 80001b2:	b933      	cbnz	r3, 80001c2 <__do_global_dtors_aux+0x16>
+ 80001b4:	4b04      	ldr	r3, [pc, #16]	; (80001c8 <__do_global_dtors_aux+0x1c>)
+ 80001b6:	b113      	cbz	r3, 80001be <__do_global_dtors_aux+0x12>
+ 80001b8:	4804      	ldr	r0, [pc, #16]	; (80001cc <__do_global_dtors_aux+0x20>)
+ 80001ba:	f3af 8000 	nop.w
+ 80001be:	2301      	movs	r3, #1
+ 80001c0:	7023      	strb	r3, [r4, #0]
+ 80001c2:	bd10      	pop	{r4, pc}
+ 80001c4:	20000004 	.word	0x20000004
+ 80001c8:	00000000 	.word	0x00000000
+ 80001cc:	080018a4 	.word	0x080018a4
+
+080001d0 <frame_dummy>:
+ 80001d0:	b508      	push	{r3, lr}
+ 80001d2:	4b03      	ldr	r3, [pc, #12]	; (80001e0 <frame_dummy+0x10>)
+ 80001d4:	b11b      	cbz	r3, 80001de <frame_dummy+0xe>
+ 80001d6:	4903      	ldr	r1, [pc, #12]	; (80001e4 <frame_dummy+0x14>)
+ 80001d8:	4803      	ldr	r0, [pc, #12]	; (80001e8 <frame_dummy+0x18>)
+ 80001da:	f3af 8000 	nop.w
+ 80001de:	bd08      	pop	{r3, pc}
+ 80001e0:	00000000 	.word	0x00000000
+ 80001e4:	20000008 	.word	0x20000008
+ 80001e8:	080018a4 	.word	0x080018a4
+
+080001ec <__NVIC_GetPriorityGrouping>:
+  \brief   Get Priority Grouping
+  \details Reads the priority grouping field from the NVIC Interrupt Controller.
+  \return                Priority grouping field (SCB->AIRCR [10:8] PRIGROUP field).
+ */
+__STATIC_INLINE uint32_t __NVIC_GetPriorityGrouping(void)
+{
+ 80001ec:	b480      	push	{r7}
+ 80001ee:	af00      	add	r7, sp, #0
+  return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos));
+ 80001f0:	4b04      	ldr	r3, [pc, #16]	; (8000204 <__NVIC_GetPriorityGrouping+0x18>)
+ 80001f2:	68db      	ldr	r3, [r3, #12]
+ 80001f4:	0a1b      	lsrs	r3, r3, #8
+ 80001f6:	f003 0307 	and.w	r3, r3, #7
+}
+ 80001fa:	4618      	mov	r0, r3
+ 80001fc:	46bd      	mov	sp, r7
+ 80001fe:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000202:	4770      	bx	lr
+ 8000204:	e000ed00 	.word	0xe000ed00
+
+08000208 <__NVIC_EnableIRQ>:
+  \details Enables a device specific interrupt in the NVIC interrupt controller.
+  \param [in]      IRQn  Device specific interrupt number.
+  \note    IRQn must not be negative.
+ */
+__STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
+{
+ 8000208:	b480      	push	{r7}
+ 800020a:	b083      	sub	sp, #12
+ 800020c:	af00      	add	r7, sp, #0
+ 800020e:	4603      	mov	r3, r0
+ 8000210:	71fb      	strb	r3, [r7, #7]
+  if ((int32_t)(IRQn) >= 0)
+ 8000212:	f997 3007 	ldrsb.w	r3, [r7, #7]
+ 8000216:	2b00      	cmp	r3, #0
+ 8000218:	db0b      	blt.n	8000232 <__NVIC_EnableIRQ+0x2a>
+  {
+    NVIC->ISER[(((uint32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+ 800021a:	79fb      	ldrb	r3, [r7, #7]
+ 800021c:	f003 021f 	and.w	r2, r3, #31
+ 8000220:	4907      	ldr	r1, [pc, #28]	; (8000240 <__NVIC_EnableIRQ+0x38>)
+ 8000222:	f997 3007 	ldrsb.w	r3, [r7, #7]
+ 8000226:	095b      	lsrs	r3, r3, #5
+ 8000228:	2001      	movs	r0, #1
+ 800022a:	fa00 f202 	lsl.w	r2, r0, r2
+ 800022e:	f841 2023 	str.w	r2, [r1, r3, lsl #2]
+  }
+}
+ 8000232:	bf00      	nop
+ 8000234:	370c      	adds	r7, #12
+ 8000236:	46bd      	mov	sp, r7
+ 8000238:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 800023c:	4770      	bx	lr
+ 800023e:	bf00      	nop
+ 8000240:	e000e100 	.word	0xe000e100
+
+08000244 <__NVIC_SetPriority>:
+  \param [in]      IRQn  Interrupt number.
+  \param [in]  priority  Priority to set.
+  \note    The priority cannot be set for every processor exception.
+ */
+__STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
+{
+ 8000244:	b480      	push	{r7}
+ 8000246:	b083      	sub	sp, #12
+ 8000248:	af00      	add	r7, sp, #0
+ 800024a:	4603      	mov	r3, r0
+ 800024c:	6039      	str	r1, [r7, #0]
+ 800024e:	71fb      	strb	r3, [r7, #7]
+  if ((int32_t)(IRQn) >= 0)
+ 8000250:	f997 3007 	ldrsb.w	r3, [r7, #7]
+ 8000254:	2b00      	cmp	r3, #0
+ 8000256:	db0a      	blt.n	800026e <__NVIC_SetPriority+0x2a>
+  {
+    NVIC->IP[((uint32_t)IRQn)]               = (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
+ 8000258:	683b      	ldr	r3, [r7, #0]
+ 800025a:	b2da      	uxtb	r2, r3
+ 800025c:	490c      	ldr	r1, [pc, #48]	; (8000290 <__NVIC_SetPriority+0x4c>)
+ 800025e:	f997 3007 	ldrsb.w	r3, [r7, #7]
+ 8000262:	0112      	lsls	r2, r2, #4
+ 8000264:	b2d2      	uxtb	r2, r2
+ 8000266:	440b      	add	r3, r1
+ 8000268:	f883 2300 	strb.w	r2, [r3, #768]	; 0x300
+  }
+  else
+  {
+    SCB->SHP[(((uint32_t)IRQn) & 0xFUL)-4UL] = (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
+  }
+}
+ 800026c:	e00a      	b.n	8000284 <__NVIC_SetPriority+0x40>
+    SCB->SHP[(((uint32_t)IRQn) & 0xFUL)-4UL] = (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
+ 800026e:	683b      	ldr	r3, [r7, #0]
+ 8000270:	b2da      	uxtb	r2, r3
+ 8000272:	4908      	ldr	r1, [pc, #32]	; (8000294 <__NVIC_SetPriority+0x50>)
+ 8000274:	79fb      	ldrb	r3, [r7, #7]
+ 8000276:	f003 030f 	and.w	r3, r3, #15
+ 800027a:	3b04      	subs	r3, #4
+ 800027c:	0112      	lsls	r2, r2, #4
+ 800027e:	b2d2      	uxtb	r2, r2
+ 8000280:	440b      	add	r3, r1
+ 8000282:	761a      	strb	r2, [r3, #24]
+}
+ 8000284:	bf00      	nop
+ 8000286:	370c      	adds	r7, #12
+ 8000288:	46bd      	mov	sp, r7
+ 800028a:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 800028e:	4770      	bx	lr
+ 8000290:	e000e100 	.word	0xe000e100
+ 8000294:	e000ed00 	.word	0xe000ed00
+
+08000298 <NVIC_EncodePriority>:
+  \param [in]   PreemptPriority  Preemptive priority value (starting from 0).
+  \param [in]       SubPriority  Subpriority value (starting from 0).
+  \return                        Encoded priority. Value can be used in the function \ref NVIC_SetPriority().
+ */
+__STATIC_INLINE uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t PreemptPriority, uint32_t SubPriority)
+{
+ 8000298:	b480      	push	{r7}
+ 800029a:	b089      	sub	sp, #36	; 0x24
+ 800029c:	af00      	add	r7, sp, #0
+ 800029e:	60f8      	str	r0, [r7, #12]
+ 80002a0:	60b9      	str	r1, [r7, #8]
+ 80002a2:	607a      	str	r2, [r7, #4]
+  uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL);   /* only values 0..7 are used          */
+ 80002a4:	68fb      	ldr	r3, [r7, #12]
+ 80002a6:	f003 0307 	and.w	r3, r3, #7
+ 80002aa:	61fb      	str	r3, [r7, #28]
+  uint32_t PreemptPriorityBits;
+  uint32_t SubPriorityBits;
+
+  PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS)) ? (uint32_t)(__NVIC_PRIO_BITS) : (uint32_t)(7UL - PriorityGroupTmp);
+ 80002ac:	69fb      	ldr	r3, [r7, #28]
+ 80002ae:	f1c3 0307 	rsb	r3, r3, #7
+ 80002b2:	2b04      	cmp	r3, #4
+ 80002b4:	bf28      	it	cs
+ 80002b6:	2304      	movcs	r3, #4
+ 80002b8:	61bb      	str	r3, [r7, #24]
+  SubPriorityBits     = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL) ? (uint32_t)0UL : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
+ 80002ba:	69fb      	ldr	r3, [r7, #28]
+ 80002bc:	3304      	adds	r3, #4
+ 80002be:	2b06      	cmp	r3, #6
+ 80002c0:	d902      	bls.n	80002c8 <NVIC_EncodePriority+0x30>
+ 80002c2:	69fb      	ldr	r3, [r7, #28]
+ 80002c4:	3b03      	subs	r3, #3
+ 80002c6:	e000      	b.n	80002ca <NVIC_EncodePriority+0x32>
+ 80002c8:	2300      	movs	r3, #0
+ 80002ca:	617b      	str	r3, [r7, #20]
+
+  return (
+           ((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) |
+ 80002cc:	f04f 32ff 	mov.w	r2, #4294967295
+ 80002d0:	69bb      	ldr	r3, [r7, #24]
+ 80002d2:	fa02 f303 	lsl.w	r3, r2, r3
+ 80002d6:	43da      	mvns	r2, r3
+ 80002d8:	68bb      	ldr	r3, [r7, #8]
+ 80002da:	401a      	ands	r2, r3
+ 80002dc:	697b      	ldr	r3, [r7, #20]
+ 80002de:	409a      	lsls	r2, r3
+           ((SubPriority     & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL)))
+ 80002e0:	f04f 31ff 	mov.w	r1, #4294967295
+ 80002e4:	697b      	ldr	r3, [r7, #20]
+ 80002e6:	fa01 f303 	lsl.w	r3, r1, r3
+ 80002ea:	43d9      	mvns	r1, r3
+ 80002ec:	687b      	ldr	r3, [r7, #4]
+ 80002ee:	400b      	ands	r3, r1
+           ((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) |
+ 80002f0:	4313      	orrs	r3, r2
+         );
+}
+ 80002f2:	4618      	mov	r0, r3
+ 80002f4:	3724      	adds	r7, #36	; 0x24
+ 80002f6:	46bd      	mov	sp, r7
+ 80002f8:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80002fc:	4770      	bx	lr
+	...
+
+08000300 <LCD_Ini>:
+#define LCD_SHITF_L			0x10
+
+
+/********************************* FUNCIONES DEL DISPLAY *******************************/
+void LCD_Ini(void)				   			 //inicializar display en 8 bits
+{
+ 8000300:	b580      	push	{r7, lr}
+ 8000302:	b082      	sub	sp, #8
+ 8000304:	af00      	add	r7, sp, #0
+	uint32_t tmpreg=0x00000000;
+ 8000306:	2300      	movs	r3, #0
+ 8000308:	607b      	str	r3, [r7, #4]
+	//activar periferico (reloj)
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN;
+ 800030a:	4b24      	ldr	r3, [pc, #144]	; (800039c <LCD_Ini+0x9c>)
+ 800030c:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 800030e:	4a23      	ldr	r2, [pc, #140]	; (800039c <LCD_Ini+0x9c>)
+ 8000310:	f043 0310 	orr.w	r3, r3, #16
+ 8000314:	6313      	str	r3, [r2, #48]	; 0x30
+	// Delay after an RCC peripheral clock enabling
+	tmpreg = RCC->AHB1ENR & RCC_AHB1ENR_GPIOEEN;
+ 8000316:	4b21      	ldr	r3, [pc, #132]	; (800039c <LCD_Ini+0x9c>)
+ 8000318:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 800031a:	f003 0310 	and.w	r3, r3, #16
+ 800031e:	607b      	str	r3, [r7, #4]
+
+	GPIOE->MODER   &= ~ 0x003FFFFF; 	    //apagar bits 10-0     			0b0000-0000-0011-1111-1111-1111-1111-1111
+ 8000320:	4b1f      	ldr	r3, [pc, #124]	; (80003a0 <LCD_Ini+0xa0>)
+ 8000322:	681b      	ldr	r3, [r3, #0]
+ 8000324:	4a1e      	ldr	r2, [pc, #120]	; (80003a0 <LCD_Ini+0xa0>)
+ 8000326:	0d9b      	lsrs	r3, r3, #22
+ 8000328:	059b      	lsls	r3, r3, #22
+ 800032a:	6013      	str	r3, [r2, #0]
+	GPIOE->MODER   |=   0x00155555; 		//Output,						0b0000-0000-0001-0101-0101-0101-0101-0101
+ 800032c:	4b1c      	ldr	r3, [pc, #112]	; (80003a0 <LCD_Ini+0xa0>)
+ 800032e:	681a      	ldr	r2, [r3, #0]
+ 8000330:	491b      	ldr	r1, [pc, #108]	; (80003a0 <LCD_Ini+0xa0>)
+ 8000332:	4b1c      	ldr	r3, [pc, #112]	; (80003a4 <LCD_Ini+0xa4>)
+ 8000334:	4313      	orrs	r3, r2
+ 8000336:	600b      	str	r3, [r1, #0]
+	GPIOE->OTYPER  &= ~ 0x000007FF; 	    //Push pull, apagar bits 10-0   0b0000-0000-0000-0000-0000-0111-1111-1111
+ 8000338:	4b19      	ldr	r3, [pc, #100]	; (80003a0 <LCD_Ini+0xa0>)
+ 800033a:	685b      	ldr	r3, [r3, #4]
+ 800033c:	4a18      	ldr	r2, [pc, #96]	; (80003a0 <LCD_Ini+0xa0>)
+ 800033e:	f423 63ff 	bic.w	r3, r3, #2040	; 0x7f8
+ 8000342:	f023 0307 	bic.w	r3, r3, #7
+ 8000346:	6053      	str	r3, [r2, #4]
+	GPIOE->PUPDR   &= ~ 0x000007FF; 		//No Pull, apagar               0b0000-0000-0000-0000-0000-0111-1111-1111
+ 8000348:	4b15      	ldr	r3, [pc, #84]	; (80003a0 <LCD_Ini+0xa0>)
+ 800034a:	68db      	ldr	r3, [r3, #12]
+ 800034c:	4a14      	ldr	r2, [pc, #80]	; (80003a0 <LCD_Ini+0xa0>)
+ 800034e:	f423 63ff 	bic.w	r3, r3, #2040	; 0x7f8
+ 8000352:	f023 0307 	bic.w	r3, r3, #7
+ 8000356:	60d3      	str	r3, [r2, #12]
+	GPIOE->OSPEEDR &= ~ 0x003FFFFF; 	    //apagar bits 10-0              0b0000-0000-0011-1111-1111-1111-1111-1111
+ 8000358:	4b11      	ldr	r3, [pc, #68]	; (80003a0 <LCD_Ini+0xa0>)
+ 800035a:	689b      	ldr	r3, [r3, #8]
+ 800035c:	4a10      	ldr	r2, [pc, #64]	; (80003a0 <LCD_Ini+0xa0>)
+ 800035e:	0d9b      	lsrs	r3, r3, #22
+ 8000360:	059b      	lsls	r3, r3, #22
+ 8000362:	6093      	str	r3, [r2, #8]
+
+	LCD_WriteControl (LCD_FUNCTION_SET);		 //
+ 8000364:	203c      	movs	r0, #60	; 0x3c
+ 8000366:	f000 f835 	bl	80003d4 <LCD_WriteControl>
+	LCD_WriteControl (LCD_FUNCTION_SET);		 //
+ 800036a:	203c      	movs	r0, #60	; 0x3c
+ 800036c:	f000 f832 	bl	80003d4 <LCD_WriteControl>
+	LCD_WriteControl (LCD_FUNCTION_SET);		 //
+ 8000370:	203c      	movs	r0, #60	; 0x3c
+ 8000372:	f000 f82f 	bl	80003d4 <LCD_WriteControl>
+	LCD_WriteControl (LCD_OFF);				 //
+ 8000376:	2008      	movs	r0, #8
+ 8000378:	f000 f82c 	bl	80003d4 <LCD_WriteControl>
+	LCD_WriteControl (LCD_CLEAR);				 //
+ 800037c:	2001      	movs	r0, #1
+ 800037e:	f000 f829 	bl	80003d4 <LCD_WriteControl>
+	LCD_WriteControl (LCD_MODE_SET);			 //
+ 8000382:	2006      	movs	r0, #6
+ 8000384:	f000 f826 	bl	80003d4 <LCD_WriteControl>
+	LCD_WriteControl (LCD_ON);					 //
+ 8000388:	200c      	movs	r0, #12
+ 800038a:	f000 f823 	bl	80003d4 <LCD_WriteControl>
+	LCD_WriteControl (LCD_HOME);				 //
+ 800038e:	2002      	movs	r0, #2
+ 8000390:	f000 f820 	bl	80003d4 <LCD_WriteControl>
+
+	tmpreg=tmpreg; 								//para que no genere warning por falta de uso
+}
+ 8000394:	bf00      	nop
+ 8000396:	3708      	adds	r7, #8
+ 8000398:	46bd      	mov	sp, r7
+ 800039a:	bd80      	pop	{r7, pc}
+ 800039c:	40023800 	.word	0x40023800
+ 80003a0:	40021000 	.word	0x40021000
+ 80003a4:	00155555 	.word	0x00155555
+
+080003a8 <LCD_Busy>:
+
+unsigned char LCD_Busy ( void )				 //retorna el valor "busy flag"
+{
+ 80003a8:	b480      	push	{r7}
+ 80003aa:	b083      	sub	sp, #12
+ 80003ac:	af00      	add	r7, sp, #0
+ unsigned int i;
+ for(i=100000; i>0; )
+ 80003ae:	4b08      	ldr	r3, [pc, #32]	; (80003d0 <LCD_Busy+0x28>)
+ 80003b0:	607b      	str	r3, [r7, #4]
+ 80003b2:	e002      	b.n	80003ba <LCD_Busy+0x12>
+ {
+  i--;
+ 80003b4:	687b      	ldr	r3, [r7, #4]
+ 80003b6:	3b01      	subs	r3, #1
+ 80003b8:	607b      	str	r3, [r7, #4]
+ for(i=100000; i>0; )
+ 80003ba:	687b      	ldr	r3, [r7, #4]
+ 80003bc:	2b00      	cmp	r3, #0
+ 80003be:	d1f9      	bne.n	80003b4 <LCD_Busy+0xc>
+ }
+ return 0x00;								 // retornar busy flag
+ 80003c0:	2300      	movs	r3, #0
+}
+ 80003c2:	4618      	mov	r0, r3
+ 80003c4:	370c      	adds	r7, #12
+ 80003c6:	46bd      	mov	sp, r7
+ 80003c8:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80003cc:	4770      	bx	lr
+ 80003ce:	bf00      	nop
+ 80003d0:	000186a0 	.word	0x000186a0
+
+080003d4 <LCD_WriteControl>:
+
+void LCD_WriteControl (unsigned char CMD) 	 //manda una instruccion de control
+{
+ 80003d4:	b580      	push	{r7, lr}
+ 80003d6:	b082      	sub	sp, #8
+ 80003d8:	af00      	add	r7, sp, #0
+ 80003da:	4603      	mov	r3, r0
+ 80003dc:	71fb      	strb	r3, [r7, #7]
+ while (LCD_Busy()& 0X80);			 		 // checar bandera busy
+ 80003de:	bf00      	nop
+ 80003e0:	f7ff ffe2 	bl	80003a8 <LCD_Busy>
+ 80003e4:	4603      	mov	r3, r0
+ 80003e6:	b25b      	sxtb	r3, r3
+ 80003e8:	2b00      	cmp	r3, #0
+ 80003ea:	dbf9      	blt.n	80003e0 <LCD_WriteControl+0xc>
+ CLEAR_LCD_E;	   							 // apagar E
+ 80003ec:	4b13      	ldr	r3, [pc, #76]	; (800043c <LCD_WriteControl+0x68>)
+ 80003ee:	f04f 7280 	mov.w	r2, #16777216	; 0x1000000
+ 80003f2:	619a      	str	r2, [r3, #24]
+ SET_LCD_WRITE; 							 // poner RW en 0
+ 80003f4:	4b11      	ldr	r3, [pc, #68]	; (800043c <LCD_WriteControl+0x68>)
+ 80003f6:	f04f 7200 	mov.w	r2, #33554432	; 0x2000000
+ 80003fa:	619a      	str	r2, [r3, #24]
+ SET_LCD_CMD;								 // poner RS en 0
+ 80003fc:	4b0f      	ldr	r3, [pc, #60]	; (800043c <LCD_WriteControl+0x68>)
+ 80003fe:	f04f 6280 	mov.w	r2, #67108864	; 0x4000000
+ 8000402:	619a      	str	r2, [r3, #24]
+
+ LCD_OP_PORT &= ~ 0x000000FF; 	             //apagar bits 7-0     			0b0000-0000-0000-0000-0000-0000-1111-1111
+ 8000404:	4b0d      	ldr	r3, [pc, #52]	; (800043c <LCD_WriteControl+0x68>)
+ 8000406:	695b      	ldr	r3, [r3, #20]
+ 8000408:	4a0c      	ldr	r2, [pc, #48]	; (800043c <LCD_WriteControl+0x68>)
+ 800040a:	f023 03ff 	bic.w	r3, r3, #255	; 0xff
+ 800040e:	6153      	str	r3, [r2, #20]
+ LCD_OP_PORT |=   (uint32_t)CMD;             // mandar comando
+ 8000410:	4b0a      	ldr	r3, [pc, #40]	; (800043c <LCD_WriteControl+0x68>)
+ 8000412:	695a      	ldr	r2, [r3, #20]
+ 8000414:	79fb      	ldrb	r3, [r7, #7]
+ 8000416:	4909      	ldr	r1, [pc, #36]	; (800043c <LCD_WriteControl+0x68>)
+ 8000418:	4313      	orrs	r3, r2
+ 800041a:	614b      	str	r3, [r1, #20]
+
+ SET_LCD_E;	   								 // prender E
+ 800041c:	4b07      	ldr	r3, [pc, #28]	; (800043c <LCD_WriteControl+0x68>)
+ 800041e:	f44f 7280 	mov.w	r2, #256	; 0x100
+ 8000422:	619a      	str	r2, [r3, #24]
+ SET_LCD_E;	   								 // prender E
+ 8000424:	4b05      	ldr	r3, [pc, #20]	; (800043c <LCD_WriteControl+0x68>)
+ 8000426:	f44f 7280 	mov.w	r2, #256	; 0x100
+ 800042a:	619a      	str	r2, [r3, #24]
+ CLEAR_LCD_E;	   							 // apagar E
+ 800042c:	4b03      	ldr	r3, [pc, #12]	; (800043c <LCD_WriteControl+0x68>)
+ 800042e:	f04f 7280 	mov.w	r2, #16777216	; 0x1000000
+ 8000432:	619a      	str	r2, [r3, #24]
+}
+ 8000434:	bf00      	nop
+ 8000436:	3708      	adds	r7, #8
+ 8000438:	46bd      	mov	sp, r7
+ 800043a:	bd80      	pop	{r7, pc}
+ 800043c:	40021000 	.word	0x40021000
+
+08000440 <LCD_Caracter>:
+
+void LCD_Caracter (char Data)		 		 //manda un caracter al display
+{
+ 8000440:	b580      	push	{r7, lr}
+ 8000442:	b082      	sub	sp, #8
+ 8000444:	af00      	add	r7, sp, #0
+ 8000446:	4603      	mov	r3, r0
+ 8000448:	71fb      	strb	r3, [r7, #7]
+ while (LCD_Busy() & 0X80); 				 // checar bandera busy
+ 800044a:	bf00      	nop
+ 800044c:	f7ff ffac 	bl	80003a8 <LCD_Busy>
+ 8000450:	4603      	mov	r3, r0
+ 8000452:	b25b      	sxtb	r3, r3
+ 8000454:	2b00      	cmp	r3, #0
+ 8000456:	dbf9      	blt.n	800044c <LCD_Caracter+0xc>
+ CLEAR_LCD_E;	   							 // apagar E
+ 8000458:	4b13      	ldr	r3, [pc, #76]	; (80004a8 <LCD_Caracter+0x68>)
+ 800045a:	f04f 7280 	mov.w	r2, #16777216	; 0x1000000
+ 800045e:	619a      	str	r2, [r3, #24]
+ SET_LCD_WRITE ;							 // poner RW en 0
+ 8000460:	4b11      	ldr	r3, [pc, #68]	; (80004a8 <LCD_Caracter+0x68>)
+ 8000462:	f04f 7200 	mov.w	r2, #33554432	; 0x2000000
+ 8000466:	619a      	str	r2, [r3, #24]
+ SET_LCD_DATA;								 // poner RS en 1
+ 8000468:	4b0f      	ldr	r3, [pc, #60]	; (80004a8 <LCD_Caracter+0x68>)
+ 800046a:	f44f 6280 	mov.w	r2, #1024	; 0x400
+ 800046e:	619a      	str	r2, [r3, #24]
+
+ LCD_OP_PORT &= ~ 0x000000FF; 	             //apagar bits 7-0     			0b0000-0000-0000-0000-0000-0000-1111-1111
+ 8000470:	4b0d      	ldr	r3, [pc, #52]	; (80004a8 <LCD_Caracter+0x68>)
+ 8000472:	695b      	ldr	r3, [r3, #20]
+ 8000474:	4a0c      	ldr	r2, [pc, #48]	; (80004a8 <LCD_Caracter+0x68>)
+ 8000476:	f023 03ff 	bic.w	r3, r3, #255	; 0xff
+ 800047a:	6153      	str	r3, [r2, #20]
+ LCD_OP_PORT |=   (uint32_t)Data;            // mandar caracter
+ 800047c:	4b0a      	ldr	r3, [pc, #40]	; (80004a8 <LCD_Caracter+0x68>)
+ 800047e:	695a      	ldr	r2, [r3, #20]
+ 8000480:	79fb      	ldrb	r3, [r7, #7]
+ 8000482:	4909      	ldr	r1, [pc, #36]	; (80004a8 <LCD_Caracter+0x68>)
+ 8000484:	4313      	orrs	r3, r2
+ 8000486:	614b      	str	r3, [r1, #20]
+
+ SET_LCD_E;	   								 // prender E
+ 8000488:	4b07      	ldr	r3, [pc, #28]	; (80004a8 <LCD_Caracter+0x68>)
+ 800048a:	f44f 7280 	mov.w	r2, #256	; 0x100
+ 800048e:	619a      	str	r2, [r3, #24]
+ SET_LCD_E;	   								 // prender E
+ 8000490:	4b05      	ldr	r3, [pc, #20]	; (80004a8 <LCD_Caracter+0x68>)
+ 8000492:	f44f 7280 	mov.w	r2, #256	; 0x100
+ 8000496:	619a      	str	r2, [r3, #24]
+ CLEAR_LCD_E;	   							 // apagar E
+ 8000498:	4b03      	ldr	r3, [pc, #12]	; (80004a8 <LCD_Caracter+0x68>)
+ 800049a:	f04f 7280 	mov.w	r2, #16777216	; 0x1000000
+ 800049e:	619a      	str	r2, [r3, #24]
+}
+ 80004a0:	bf00      	nop
+ 80004a2:	3708      	adds	r7, #8
+ 80004a4:	46bd      	mov	sp, r7
+ 80004a6:	bd80      	pop	{r7, pc}
+ 80004a8:	40021000 	.word	0x40021000
+
+080004ac <LCD_Clear>:
+
+void LCD_Clear(void)						 //limpiar display y dejar cursor inicial
+{
+ 80004ac:	b580      	push	{r7, lr}
+ 80004ae:	af00      	add	r7, sp, #0
+ LCD_WriteControl(LCD_CLEAR);
+ 80004b0:	2001      	movs	r0, #1
+ 80004b2:	f7ff ff8f 	bl	80003d4 <LCD_WriteControl>
+}
+ 80004b6:	bf00      	nop
+ 80004b8:	bd80      	pop	{r7, pc}
+
+080004ba <LCD_Home>:
+
+void LCD_Home(void)							 //mandar cursor a posicion original
+{
+ 80004ba:	b580      	push	{r7, lr}
+ 80004bc:	af00      	add	r7, sp, #0
+ LCD_WriteControl(LCD_HOME);
+ 80004be:	2002      	movs	r0, #2
+ 80004c0:	f7ff ff88 	bl	80003d4 <LCD_WriteControl>
+}
+ 80004c4:	bf00      	nop
+ 80004c6:	bd80      	pop	{r7, pc}
+
+080004c8 <LCD_Cursor>:
+{
+ LCD_WriteControl(LCD_SHITF_L);
+}
+
+void LCD_Cursor (char ren, char col)		 //posiciona el cursor en renglon,columna
+{
+ 80004c8:	b580      	push	{r7, lr}
+ 80004ca:	b082      	sub	sp, #8
+ 80004cc:	af00      	add	r7, sp, #0
+ 80004ce:	4603      	mov	r3, r0
+ 80004d0:	460a      	mov	r2, r1
+ 80004d2:	71fb      	strb	r3, [r7, #7]
+ 80004d4:	4613      	mov	r3, r2
+ 80004d6:	71bb      	strb	r3, [r7, #6]
+ switch(ren)
+ 80004d8:	79fb      	ldrb	r3, [r7, #7]
+ 80004da:	2b01      	cmp	r3, #1
+ 80004dc:	d002      	beq.n	80004e4 <LCD_Cursor+0x1c>
+ 80004de:	2b02      	cmp	r3, #2
+ 80004e0:	d007      	beq.n	80004f2 <LCD_Cursor+0x2a>
+ {
+  case 1: LCD_WriteControl (0x80 + col - 1); break;
+  case 2: LCD_WriteControl (0xc0 + col - 1); break;
+  default: break;
+ 80004e2:	e00d      	b.n	8000500 <LCD_Cursor+0x38>
+  case 1: LCD_WriteControl (0x80 + col - 1); break;
+ 80004e4:	79bb      	ldrb	r3, [r7, #6]
+ 80004e6:	337f      	adds	r3, #127	; 0x7f
+ 80004e8:	b2db      	uxtb	r3, r3
+ 80004ea:	4618      	mov	r0, r3
+ 80004ec:	f7ff ff72 	bl	80003d4 <LCD_WriteControl>
+ 80004f0:	e006      	b.n	8000500 <LCD_Cursor+0x38>
+  case 2: LCD_WriteControl (0xc0 + col - 1); break;
+ 80004f2:	79bb      	ldrb	r3, [r7, #6]
+ 80004f4:	3b41      	subs	r3, #65	; 0x41
+ 80004f6:	b2db      	uxtb	r3, r3
+ 80004f8:	4618      	mov	r0, r3
+ 80004fa:	f7ff ff6b 	bl	80003d4 <LCD_WriteControl>
+ 80004fe:	bf00      	nop
+ }
+}
+ 8000500:	bf00      	nop
+ 8000502:	3708      	adds	r7, #8
+ 8000504:	46bd      	mov	sp, r7
+ 8000506:	bd80      	pop	{r7, pc}
+
+08000508 <LCD_Cadena>:
+ while (*cadena)
+ LCD_Caracter (*cadena++);
+}
+
+void LCD_Cadena (char ren, char col ,char *cadena)
+{
+ 8000508:	b580      	push	{r7, lr}
+ 800050a:	b082      	sub	sp, #8
+ 800050c:	af00      	add	r7, sp, #0
+ 800050e:	4603      	mov	r3, r0
+ 8000510:	603a      	str	r2, [r7, #0]
+ 8000512:	71fb      	strb	r3, [r7, #7]
+ 8000514:	460b      	mov	r3, r1
+ 8000516:	71bb      	strb	r3, [r7, #6]
+ LCD_Cursor (ren, col);
+ 8000518:	79ba      	ldrb	r2, [r7, #6]
+ 800051a:	79fb      	ldrb	r3, [r7, #7]
+ 800051c:	4611      	mov	r1, r2
+ 800051e:	4618      	mov	r0, r3
+ 8000520:	f7ff ffd2 	bl	80004c8 <LCD_Cursor>
+ while (*cadena)
+ 8000524:	e006      	b.n	8000534 <LCD_Cadena+0x2c>
+ LCD_Caracter (*cadena++);
+ 8000526:	683b      	ldr	r3, [r7, #0]
+ 8000528:	1c5a      	adds	r2, r3, #1
+ 800052a:	603a      	str	r2, [r7, #0]
+ 800052c:	781b      	ldrb	r3, [r3, #0]
+ 800052e:	4618      	mov	r0, r3
+ 8000530:	f7ff ff86 	bl	8000440 <LCD_Caracter>
+ while (*cadena)
+ 8000534:	683b      	ldr	r3, [r7, #0]
+ 8000536:	781b      	ldrb	r3, [r3, #0]
+ 8000538:	2b00      	cmp	r3, #0
+ 800053a:	d1f4      	bne.n	8000526 <LCD_Cadena+0x1e>
+}
+ 800053c:	bf00      	nop
+ 800053e:	bf00      	nop
+ 8000540:	3708      	adds	r7, #8
+ 8000542:	46bd      	mov	sp, r7
+ 8000544:	bd80      	pop	{r7, pc}
+	...
+
+08000548 <main>:
+uint8_t  del=1;
+int    var1=0;
+int    var2;
+int main (void)
+
+{
+ 8000548:	b580      	push	{r7, lr}
+ 800054a:	af00      	add	r7, sp, #0
+	        LCD_Ini();
+ 800054c:	f7ff fed8 	bl	8000300 <LCD_Ini>
+			ConfiguraPerifericos();
+ 8000550:	f000 f830 	bl	80005b4 <ConfiguraPerifericos>
+			del=4;
+ 8000554:	4b13      	ldr	r3, [pc, #76]	; (80005a4 <main+0x5c>)
+ 8000556:	2204      	movs	r2, #4
+ 8000558:	701a      	strb	r2, [r3, #0]
+            var1=0;
+ 800055a:	4b13      	ldr	r3, [pc, #76]	; (80005a8 <main+0x60>)
+ 800055c:	2200      	movs	r2, #0
+ 800055e:	601a      	str	r2, [r3, #0]
+            var2;
+		    LCD_Cadena(1,1,"ENNCENDIDO ");
+ 8000560:	4a12      	ldr	r2, [pc, #72]	; (80005ac <main+0x64>)
+ 8000562:	2101      	movs	r1, #1
+ 8000564:	2001      	movs	r0, #1
+ 8000566:	f7ff ffcf 	bl	8000508 <LCD_Cadena>
+		    LCD_Clear();
+ 800056a:	f7ff ff9f 	bl	80004ac <LCD_Clear>
+		    LCD_Cadena(2,3,":");
+ 800056e:	4a10      	ldr	r2, [pc, #64]	; (80005b0 <main+0x68>)
+ 8000570:	2103      	movs	r1, #3
+ 8000572:	2002      	movs	r0, #2
+ 8000574:	f7ff ffc8 	bl	8000508 <LCD_Cadena>
+		    LCD_Cadena(2,6,":");
+ 8000578:	4a0d      	ldr	r2, [pc, #52]	; (80005b0 <main+0x68>)
+ 800057a:	2106      	movs	r1, #6
+ 800057c:	2002      	movs	r0, #2
+ 800057e:	f7ff ffc3 	bl	8000508 <LCD_Cadena>
+
+
+	while(1)
+	{
+ {
+        display();
+ 8000582:	f000 fb1d 	bl	8000bc0 <display>
+	   switch(var1)
+ 8000586:	4b08      	ldr	r3, [pc, #32]	; (80005a8 <main+0x60>)
+ 8000588:	681b      	ldr	r3, [r3, #0]
+ 800058a:	2b01      	cmp	r3, #1
+ 800058c:	d002      	beq.n	8000594 <main+0x4c>
+ 800058e:	2b02      	cmp	r3, #2
+ 8000590:	d003      	beq.n	800059a <main+0x52>
+ 8000592:	e005      	b.n	80005a0 <main+0x58>
+	    {
+       case 1: stop();break;
+ 8000594:	f000 fad8 	bl	8000b48 <stop>
+ 8000598:	e002      	b.n	80005a0 <main+0x58>
+       case 2:start();break;
+ 800059a:	f000 faf1 	bl	8000b80 <start>
+ 800059e:	bf00      	nop
+        display();
+ 80005a0:	e7ef      	b.n	8000582 <main+0x3a>
+ 80005a2:	bf00      	nop
+ 80005a4:	20000000 	.word	0x20000000
+ 80005a8:	2000002c 	.word	0x2000002c
+ 80005ac:	080018bc 	.word	0x080018bc
+ 80005b0:	080018c8 	.word	0x080018c8
+
+080005b4 <ConfiguraPerifericos>:
+
+
+
+
+void ConfiguraPerifericos(void)
+{
+ 80005b4:	b580      	push	{r7, lr}
+ 80005b6:	b082      	sub	sp, #8
+ 80005b8:	af00      	add	r7, sp, #0
+	uint32_t tmpreg =  0x00;
+ 80005ba:	2300      	movs	r3, #0
+ 80005bc:	607b      	str	r3, [r7, #4]
+
+
+	//-----------------------PC0 Y PC3 como salidas del SERVO MOTOR COMO SALIDA
+	//Activa periferico para (reloj)
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
+ 80005be:	4baa      	ldr	r3, [pc, #680]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 80005c0:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 80005c2:	4aa9      	ldr	r2, [pc, #676]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 80005c4:	f043 0304 	orr.w	r3, r3, #4
+ 80005c8:	6313      	str	r3, [r2, #48]	; 0x30
+	//DELAY AFTER AN RCC PERIFERAL CLOCK ENABLING
+	tmpreg = RCC->AHB1ENR & RCC_AHB1ENR_GPIOCEN;                                   //MODO , PIN//
+ 80005ca:	4ba7      	ldr	r3, [pc, #668]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 80005cc:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 80005ce:	f003 0304 	and.w	r3, r3, #4
+ 80005d2:	607b      	str	r3, [r7, #4]
+	GPIOC->MODER    |=    0x00000555; //  0000,0000,0000,0000,0000,0101,0101,0101  //01 C3//01 C2//01 C1//01 C0
+ 80005d4:	4ba5      	ldr	r3, [pc, #660]	; (800086c <ConfiguraPerifericos+0x2b8>)
+ 80005d6:	681b      	ldr	r3, [r3, #0]
+ 80005d8:	4aa4      	ldr	r2, [pc, #656]	; (800086c <ConfiguraPerifericos+0x2b8>)
+ 80005da:	f443 63aa 	orr.w	r3, r3, #1360	; 0x550
+ 80005de:	f043 0305 	orr.w	r3, r3, #5
+ 80005e2:	6013      	str	r3, [r2, #0]
+	GPIOC->OTYPER   &=  ~ 0x0000002F; //  0000,0000,0000,0000,0000,0000,0011,1111  //1 C3//1 C2//1 C1//1 C0
+ 80005e4:	4ba1      	ldr	r3, [pc, #644]	; (800086c <ConfiguraPerifericos+0x2b8>)
+ 80005e6:	685b      	ldr	r3, [r3, #4]
+ 80005e8:	4aa0      	ldr	r2, [pc, #640]	; (800086c <ConfiguraPerifericos+0x2b8>)
+ 80005ea:	f023 032f 	bic.w	r3, r3, #47	; 0x2f
+ 80005ee:	6053      	str	r3, [r2, #4]
+	GPIOC->PUPDR    &=  ~ 0x00000FFF; //  0000,0000,0000,0000,0000,1111,1111,1111  //11 C3//11 C2//11 C1//11 C0
+ 80005f0:	4b9e      	ldr	r3, [pc, #632]	; (800086c <ConfiguraPerifericos+0x2b8>)
+ 80005f2:	68db      	ldr	r3, [r3, #12]
+ 80005f4:	4a9d      	ldr	r2, [pc, #628]	; (800086c <ConfiguraPerifericos+0x2b8>)
+ 80005f6:	f423 637f 	bic.w	r3, r3, #4080	; 0xff0
+ 80005fa:	f023 030f 	bic.w	r3, r3, #15
+ 80005fe:	60d3      	str	r3, [r2, #12]
+	GPIOC->OSPEEDR  |=    0x00000555; //  0000,0000,0000,0000,0000,0101,0101,0101  //01 C3//01 C2//01 C1//01 C0
+ 8000600:	4b9a      	ldr	r3, [pc, #616]	; (800086c <ConfiguraPerifericos+0x2b8>)
+ 8000602:	689b      	ldr	r3, [r3, #8]
+ 8000604:	4a99      	ldr	r2, [pc, #612]	; (800086c <ConfiguraPerifericos+0x2b8>)
+ 8000606:	f443 63aa 	orr.w	r3, r3, #1360	; 0x550
+ 800060a:	f043 0305 	orr.w	r3, r3, #5
+ 800060e:	6093      	str	r3, [r2, #8]
+
+                                     //       BR PARTE ALTA    //   BS PARTE BAJA
+	GPIOC->BSRR      =    0x002F0000; //  0000,0000,0011,1111,0000,0000,0000,0000 //11 C3//11 C2 //11 C1 //11 C0
+ 8000610:	4b96      	ldr	r3, [pc, #600]	; (800086c <ConfiguraPerifericos+0x2b8>)
+ 8000612:	f44f 123c 	mov.w	r2, #3080192	; 0x2f0000
+ 8000616:	619a      	str	r2, [r3, #24]
+
+	//-----------------------PUERTOS DE INTERRUPCION PB0,PB4,PB8,PB12 DEBIDO A LA INTERRUPCION (SWITCH) COMO ENTRADADA PARA RELOJ
+
+   //ACTIVARV PERIFERICOS E RELOJ
+  //ACTIVAMOS EL PUERTO A
+	RCC ->AHB1ENR  |= RCC_AHB1ENR_GPIOBEN;
+ 8000618:	4b93      	ldr	r3, [pc, #588]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 800061a:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 800061c:	4a92      	ldr	r2, [pc, #584]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 800061e:	f043 0302 	orr.w	r3, r3, #2
+ 8000622:	6313      	str	r3, [r2, #48]	; 0x30
+	//DELAY AFTER  RCC PERIFERIAL
+	tmpreg =  RCC->AHB1ENR & RCC_AHB1ENR_GPIOBEN;
+ 8000624:	4b90      	ldr	r3, [pc, #576]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000626:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 8000628:	f003 0302 	and.w	r3, r3, #2
+ 800062c:	607b      	str	r3, [r7, #4]
+
+	GPIOB->MODER  &=  ~   0x03030303;//  0000,0011,0000,0011,0000,0011,0000,0011  //11 B12//11 B8//11 B4//11 B0
+ 800062e:	4b90      	ldr	r3, [pc, #576]	; (8000870 <ConfiguraPerifericos+0x2bc>)
+ 8000630:	681b      	ldr	r3, [r3, #0]
+ 8000632:	4a8f      	ldr	r2, [pc, #572]	; (8000870 <ConfiguraPerifericos+0x2bc>)
+ 8000634:	f003 33fc 	and.w	r3, r3, #4244438268	; 0xfcfcfcfc
+ 8000638:	6013      	str	r3, [r2, #0]
+
+	GPIOB->PUPDR  |=      0x01010101;//  0000,0001,0000,0001,0000,0001,0000,0001  //01 B12//01 B8//11 B4//11 B0
+ 800063a:	4b8d      	ldr	r3, [pc, #564]	; (8000870 <ConfiguraPerifericos+0x2bc>)
+ 800063c:	68db      	ldr	r3, [r3, #12]
+ 800063e:	4a8c      	ldr	r2, [pc, #560]	; (8000870 <ConfiguraPerifericos+0x2bc>)
+ 8000640:	f043 3301 	orr.w	r3, r3, #16843009	; 0x1010101
+ 8000644:	60d3      	str	r3, [r2, #12]
+
+	//-----------------------PUERTOS DE INTERRUPCION PD0 Y PD4 DEBIDO A LA INTERRUPCION (SWITCH) COMO ENTRADADA
+
+	RCC ->AHB1ENR  |= RCC_AHB1ENR_GPIODEN;
+ 8000646:	4b88      	ldr	r3, [pc, #544]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000648:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 800064a:	4a87      	ldr	r2, [pc, #540]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 800064c:	f043 0308 	orr.w	r3, r3, #8
+ 8000650:	6313      	str	r3, [r2, #48]	; 0x30
+		//DELAY AFTER  RCC PERIFERIAL
+	tmpreg =  RCC->AHB1ENR & RCC_AHB1ENR_GPIODEN;
+ 8000652:	4b85      	ldr	r3, [pc, #532]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000654:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 8000656:	f003 0308 	and.w	r3, r3, #8
+ 800065a:	607b      	str	r3, [r7, #4]
+
+
+	GPIOD->MODER  &=  ~   0x00000303;//  0000,0000,0000,0000,0000,0011,0000,0011  11 D4//11 D0
+ 800065c:	4b85      	ldr	r3, [pc, #532]	; (8000874 <ConfiguraPerifericos+0x2c0>)
+ 800065e:	681b      	ldr	r3, [r3, #0]
+ 8000660:	4a84      	ldr	r2, [pc, #528]	; (8000874 <ConfiguraPerifericos+0x2c0>)
+ 8000662:	f423 7340 	bic.w	r3, r3, #768	; 0x300
+ 8000666:	f023 0303 	bic.w	r3, r3, #3
+ 800066a:	6013      	str	r3, [r2, #0]
+
+	GPIOD->PUPDR  |=      0x00000101;//  0000,0001,0000,0000,0000,0001,0000,0001  //01 D4//01 D0
+ 800066c:	4b81      	ldr	r3, [pc, #516]	; (8000874 <ConfiguraPerifericos+0x2c0>)
+ 800066e:	68db      	ldr	r3, [r3, #12]
+ 8000670:	4a80      	ldr	r2, [pc, #512]	; (8000874 <ConfiguraPerifericos+0x2c0>)
+ 8000672:	f443 7380 	orr.w	r3, r3, #256	; 0x100
+ 8000676:	f043 0301 	orr.w	r3, r3, #1
+ 800067a:	60d3      	str	r3, [r2, #12]
+
+
+
+	///configuracion de las interrupciones externas pB0,PB4,PB8,PB12
+	RCC ->APB2ENR  |= RCC_APB2ENR_SYSCFGEN;
+ 800067c:	4b7a      	ldr	r3, [pc, #488]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 800067e:	6c5b      	ldr	r3, [r3, #68]	; 0x44
+ 8000680:	4a79      	ldr	r2, [pc, #484]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000682:	f443 4380 	orr.w	r3, r3, #16384	; 0x4000
+ 8000686:	6453      	str	r3, [r2, #68]	; 0x44
+		//DELAY AFTER  RCC PERIFERIAL
+    tmpreg =  RCC->APB2ENR & RCC_APB2ENR_SYSCFGEN;
+ 8000688:	4b77      	ldr	r3, [pc, #476]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 800068a:	6c5b      	ldr	r3, [r3, #68]	; 0x44
+ 800068c:	f403 4380 	and.w	r3, r3, #16384	; 0x4000
+ 8000690:	607b      	str	r3, [r7, #4]
+    //SELECTOR DE LOS  SYSC
+    SYSCFG->EXTICR[0] |=  0X0000001; //  0000,0000,0000,0000,0000,0000,0000,0001  //0001:  PARA GPIOB EN EXTI0 [3:0]EXTICR1
+ 8000692:	4b79      	ldr	r3, [pc, #484]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 8000694:	689b      	ldr	r3, [r3, #8]
+ 8000696:	4a78      	ldr	r2, [pc, #480]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 8000698:	f043 0301 	orr.w	r3, r3, #1
+ 800069c:	6093      	str	r3, [r2, #8]
+    SYSCFG->EXTICR[1] |=  0X0000001; //  0000,0000,0000,0000,0000,0000,0000,0001  //0001:  PARA GPIOB EN EXTI4 [3:0]EXTICR2
+ 800069e:	4b76      	ldr	r3, [pc, #472]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 80006a0:	68db      	ldr	r3, [r3, #12]
+ 80006a2:	4a75      	ldr	r2, [pc, #468]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 80006a4:	f043 0301 	orr.w	r3, r3, #1
+ 80006a8:	60d3      	str	r3, [r2, #12]
+    SYSCFG->EXTICR[2] |=  0X0000001; //  0000,0000,0000,0000,0000,0000,0000,0001  //0001:  PARA GPIOB EN EXTI8 [3:0]EXTICR3
+ 80006aa:	4b73      	ldr	r3, [pc, #460]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 80006ac:	691b      	ldr	r3, [r3, #16]
+ 80006ae:	4a72      	ldr	r2, [pc, #456]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 80006b0:	f043 0301 	orr.w	r3, r3, #1
+ 80006b4:	6113      	str	r3, [r2, #16]
+    SYSCFG->EXTICR[3] |=  0X0000001; //  0000,0000,0000,0000,0000,0000,0000,0001  //0001:  PARA GPIOB EN EXTI12[3:0]EXTICR4
+ 80006b6:	4b70      	ldr	r3, [pc, #448]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 80006b8:	695b      	ldr	r3, [r3, #20]
+ 80006ba:	4a6f      	ldr	r2, [pc, #444]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 80006bc:	f043 0301 	orr.w	r3, r3, #1
+ 80006c0:	6153      	str	r3, [r2, #20]
+    //SELECTOR DE LOS ENMASCARAMIENTOS
+
+    EXTI->IMR        |=     0X00001111;//  0000,0000,0000,0000,0001,0001,0001,0001   //01 B12//01 B8//01 B4//01 B0 //1=INTERRRUPCION DE LAS MASCARA
+ 80006c2:	4b6e      	ldr	r3, [pc, #440]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 80006c4:	681b      	ldr	r3, [r3, #0]
+ 80006c6:	4a6d      	ldr	r2, [pc, #436]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 80006c8:	f443 5388 	orr.w	r3, r3, #4352	; 0x1100
+ 80006cc:	f043 0311 	orr.w	r3, r3, #17
+ 80006d0:	6013      	str	r3, [r2, #0]
+    EXTI->EMR        &=  ~  0X00001111;//  0000,0000,0000,0000,0001,0001,0001,0001   //01 B12//01 B8//01 B4//01 B0 //EVENT NO MAKED
+ 80006d2:	4b6a      	ldr	r3, [pc, #424]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 80006d4:	685b      	ldr	r3, [r3, #4]
+ 80006d6:	4a69      	ldr	r2, [pc, #420]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 80006d8:	f423 5388 	bic.w	r3, r3, #4352	; 0x1100
+ 80006dc:	f023 0311 	bic.w	r3, r3, #17
+ 80006e0:	6053      	str	r3, [r2, #4]
+    EXTI->RTSR       &=  ~  0X00001111;//  0000,0000,0000,0000,0001,0001,0001,0001   //01 B12//01 B8//01 B4//01 B0 //EVENT NO MAKED
+ 80006e2:	4b66      	ldr	r3, [pc, #408]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 80006e4:	689b      	ldr	r3, [r3, #8]
+ 80006e6:	4a65      	ldr	r2, [pc, #404]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 80006e8:	f423 5388 	bic.w	r3, r3, #4352	; 0x1100
+ 80006ec:	f023 0311 	bic.w	r3, r3, #17
+ 80006f0:	6093      	str	r3, [r2, #8]
+    EXTI->FTSR       |=     0X00001111;//  0000,0000,0000,0000,0001,0001,0001,0001   //01 B12//01 B8//01 B4//01 B0 //EVENT NO MAKED
+ 80006f2:	4b62      	ldr	r3, [pc, #392]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 80006f4:	68db      	ldr	r3, [r3, #12]
+ 80006f6:	4a61      	ldr	r2, [pc, #388]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 80006f8:	f443 5388 	orr.w	r3, r3, #4352	; 0x1100
+ 80006fc:	f043 0311 	orr.w	r3, r3, #17
+ 8000700:	60d3      	str	r3, [r2, #12]
+
+    //CONFIGURACION DE  LAS INTERRUPCIONES EXTERNAS PD1 Y PD2
+
+
+    //ACTIVAMOS LOS PUERTOS  PD1,PD2
+           RCC ->AHB1ENR  |= RCC_AHB1ENR_GPIODEN;
+ 8000702:	4b59      	ldr	r3, [pc, #356]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000704:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 8000706:	4a58      	ldr	r2, [pc, #352]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000708:	f043 0308 	orr.w	r3, r3, #8
+ 800070c:	6313      	str	r3, [r2, #48]	; 0x30
+           //DELAY AFTER  RCC PERIFERIAL
+           tmpreg =  RCC->AHB1ENR & RCC_AHB1ENR_GPIODEN;
+ 800070e:	4b56      	ldr	r3, [pc, #344]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000710:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 8000712:	f003 0308 	and.w	r3, r3, #8
+ 8000716:	607b      	str	r3, [r7, #4]
+           GPIOD->MODER  &=  ~   0x0000003C;//  0000,0000,0000,0000,0000,0000,0011,1100 //11 B15//11 B12//11 B8//11 B4//11 B0
+ 8000718:	4b56      	ldr	r3, [pc, #344]	; (8000874 <ConfiguraPerifericos+0x2c0>)
+ 800071a:	681b      	ldr	r3, [r3, #0]
+ 800071c:	4a55      	ldr	r2, [pc, #340]	; (8000874 <ConfiguraPerifericos+0x2c0>)
+ 800071e:	f023 033c 	bic.w	r3, r3, #60	; 0x3c
+ 8000722:	6013      	str	r3, [r2, #0]
+           GPIOD->PUPDR  |=      0x00000014;//  0000,0000,0000,0000,0000,0000,0001,0100  //01 B15//01 B12//01 B8//11 B4//11 B0
+ 8000724:	4b53      	ldr	r3, [pc, #332]	; (8000874 <ConfiguraPerifericos+0x2c0>)
+ 8000726:	68db      	ldr	r3, [r3, #12]
+ 8000728:	4a52      	ldr	r2, [pc, #328]	; (8000874 <ConfiguraPerifericos+0x2c0>)
+ 800072a:	f043 0314 	orr.w	r3, r3, #20
+ 800072e:	60d3      	str	r3, [r2, #12]
+
+           ///configuracion de las interrupciones externas PB0,PB4,PB8,PB12,PB15
+           RCC ->APB2ENR  |= RCC_APB2ENR_SYSCFGEN;
+ 8000730:	4b4d      	ldr	r3, [pc, #308]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000732:	6c5b      	ldr	r3, [r3, #68]	; 0x44
+ 8000734:	4a4c      	ldr	r2, [pc, #304]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000736:	f443 4380 	orr.w	r3, r3, #16384	; 0x4000
+ 800073a:	6453      	str	r3, [r2, #68]	; 0x44
+           //DELAY AFTER  RCC PERIFERIAL
+           tmpreg =  RCC->APB2ENR & RCC_APB2ENR_SYSCFGEN;
+ 800073c:	4b4a      	ldr	r3, [pc, #296]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 800073e:	6c5b      	ldr	r3, [r3, #68]	; 0x44
+ 8000740:	f403 4380 	and.w	r3, r3, #16384	; 0x4000
+ 8000744:	607b      	str	r3, [r7, #4]
+           //SELECTOR DE LOS  SYSC                //RESERVADO        // ULTILIZABLE
+           SYSCFG->EXTICR[0] |=  0X00000030; //  0000,0000,0000,0000,0000,0000,0011,0000  //0001:  PARA GPIOB EN EXTI0 [3:0]EXTICR1
+ 8000746:	4b4c      	ldr	r3, [pc, #304]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 8000748:	689b      	ldr	r3, [r3, #8]
+ 800074a:	4a4b      	ldr	r2, [pc, #300]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 800074c:	f043 0330 	orr.w	r3, r3, #48	; 0x30
+ 8000750:	6093      	str	r3, [r2, #8]
+           SYSCFG->EXTICR[0] |=  0X00000300; //  0000,0000,0000,0000,0000,0000,0011,0000  //0001:  PARA GPIOB EN EXTI0 [3:0]EXTICR1
+ 8000752:	4b49      	ldr	r3, [pc, #292]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 8000754:	689b      	ldr	r3, [r3, #8]
+ 8000756:	4a48      	ldr	r2, [pc, #288]	; (8000878 <ConfiguraPerifericos+0x2c4>)
+ 8000758:	f443 7340 	orr.w	r3, r3, #768	; 0x300
+ 800075c:	6093      	str	r3, [r2, #8]
+
+           //SELECTOR DE LOS ENMASCARAMIENTOS
+
+                   EXTI->IMR        |=     0X00000006;//  0000,0000,0000,0000,0000,0000,0000,0110                  // 1 B4// 1 B0 //1=INTERRRUPCION DE LAS MASCARA
+ 800075e:	4b47      	ldr	r3, [pc, #284]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 8000760:	681b      	ldr	r3, [r3, #0]
+ 8000762:	4a46      	ldr	r2, [pc, #280]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 8000764:	f043 0306 	orr.w	r3, r3, #6
+ 8000768:	6013      	str	r3, [r2, #0]
+                   EXTI->EMR        &=  ~  0X00000006;//  0000,0000,0000,0000,0000,0000,0000,0110                  // 1 B8// 1 B4// 1 B0 //EVENT NO MAKED
+ 800076a:	4b44      	ldr	r3, [pc, #272]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 800076c:	685b      	ldr	r3, [r3, #4]
+ 800076e:	4a43      	ldr	r2, [pc, #268]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 8000770:	f023 0306 	bic.w	r3, r3, #6
+ 8000774:	6053      	str	r3, [r2, #4]
+                   EXTI->RTSR       &=  ~  0X00000006;//  0000,0000,0000,0000,0000,0000,0000,0110                  // 1 B8// 1 B4// 1 B0 //EVENT NO MAKED
+ 8000776:	4b41      	ldr	r3, [pc, #260]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 8000778:	689b      	ldr	r3, [r3, #8]
+ 800077a:	4a40      	ldr	r2, [pc, #256]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 800077c:	f023 0306 	bic.w	r3, r3, #6
+ 8000780:	6093      	str	r3, [r2, #8]
+                   EXTI->FTSR       |=     0X00000006;//  0000,0000,0000,0000,0000,0000,0000,0110                  // 1 B8// 1 B4// 1 B0 //EVENT NO MAKED
+ 8000782:	4b3e      	ldr	r3, [pc, #248]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 8000784:	68db      	ldr	r3, [r3, #12]
+ 8000786:	4a3d      	ldr	r2, [pc, #244]	; (800087c <ConfiguraPerifericos+0x2c8>)
+ 8000788:	f043 0306 	orr.w	r3, r3, #6
+ 800078c:	60d3      	str	r3, [r2, #12]
+
+        //CONFIGURACION DEL TIMER PARA RELOJ
+
+
+        ///-----------CONFIUGRACION DE LOS  TIMER
+        	RCC ->APB1ENR  |= RCC_APB1ENR_TIM3EN;
+ 800078e:	4b36      	ldr	r3, [pc, #216]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000790:	6c1b      	ldr	r3, [r3, #64]	; 0x40
+ 8000792:	4a35      	ldr	r2, [pc, #212]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 8000794:	f043 0302 	orr.w	r3, r3, #2
+ 8000798:	6413      	str	r3, [r2, #64]	; 0x40
+        	//------DELAY AFTER PERHIPAL  CLOCK ENABLING
+            tmpreg=RCC->APB1ENR & RCC_APB1ENR_TIM3EN;
+ 800079a:	4b33      	ldr	r3, [pc, #204]	; (8000868 <ConfiguraPerifericos+0x2b4>)
+ 800079c:	6c1b      	ldr	r3, [r3, #64]	; 0x40
+ 800079e:	f003 0302 	and.w	r3, r3, #2
+ 80007a2:	607b      	str	r3, [r7, #4]
+            tmpreg=tmpreg/2;
+ 80007a4:	687b      	ldr	r3, [r7, #4]
+ 80007a6:	085b      	lsrs	r3, r3, #1
+ 80007a8:	607b      	str	r3, [r7, #4]
+            //SELECTOR DE LOS TIMERS
+            TIM3->PSC  = 0X000003E7;//PRESCALADOR DE 9999  270f
+ 80007aa:	4b35      	ldr	r3, [pc, #212]	; (8000880 <ConfiguraPerifericos+0x2cc>)
+ 80007ac:	f240 32e7 	movw	r2, #999	; 0x3e7
+ 80007b0:	629a      	str	r2, [r3, #40]	; 0x28
+            TIM3->ARR  = 0X00015f90; //PERIODO DE 8999 2337
+ 80007b2:	4b33      	ldr	r3, [pc, #204]	; (8000880 <ConfiguraPerifericos+0x2cc>)
+ 80007b4:	4a33      	ldr	r2, [pc, #204]	; (8000884 <ConfiguraPerifericos+0x2d0>)
+ 80007b6:	62da      	str	r2, [r3, #44]	; 0x2c
+            TIM3->DIER = 0X00000001;//ENABLE INTERRUPT
+ 80007b8:	4b31      	ldr	r3, [pc, #196]	; (8000880 <ConfiguraPerifericos+0x2cc>)
+ 80007ba:	2201      	movs	r2, #1
+ 80007bc:	60da      	str	r2, [r3, #12]
+
+
+
+            //NVIC configuracion de los timers en este caso el timer 3
+               tmpreg= NVIC_GetPriorityGrouping();//CONFIGURAMOS EL NVIC DEL EXTI8
+ 80007be:	f7ff fd15 	bl	80001ec <__NVIC_GetPriorityGrouping>
+ 80007c2:	6078      	str	r0, [r7, #4]
+                  NVIC_SetPriority(TIM3_IRQn,NVIC_EncodePriority(tmpreg,0,0));
+ 80007c4:	2200      	movs	r2, #0
+ 80007c6:	2100      	movs	r1, #0
+ 80007c8:	6878      	ldr	r0, [r7, #4]
+ 80007ca:	f7ff fd65 	bl	8000298 <NVIC_EncodePriority>
+ 80007ce:	4603      	mov	r3, r0
+ 80007d0:	4619      	mov	r1, r3
+ 80007d2:	201d      	movs	r0, #29
+ 80007d4:	f7ff fd36 	bl	8000244 <__NVIC_SetPriority>
+                  NVIC_EnableIRQ(TIM3_IRQn);
+ 80007d8:	201d      	movs	r0, #29
+ 80007da:	f7ff fd15 	bl	8000208 <__NVIC_EnableIRQ>
+                  TIM3->CR1 = 0X00000001; //ENABLE DEL TIM3
+ 80007de:	4b28      	ldr	r3, [pc, #160]	; (8000880 <ConfiguraPerifericos+0x2cc>)
+ 80007e0:	2201      	movs	r2, #1
+ 80007e2:	601a      	str	r2, [r3, #0]
+
+    //nvic configuracion.
+    tmpreg= NVIC_GetPriorityGrouping();  //CONFIGURAMOS EL EL NVIC DEL EXTI0
+ 80007e4:	f7ff fd02 	bl	80001ec <__NVIC_GetPriorityGrouping>
+ 80007e8:	6078      	str	r0, [r7, #4]
+       NVIC_SetPriority(EXTI0_IRQn,13);
+ 80007ea:	210d      	movs	r1, #13
+ 80007ec:	2006      	movs	r0, #6
+ 80007ee:	f7ff fd29 	bl	8000244 <__NVIC_SetPriority>
+       NVIC_EnableIRQ(EXTI0_IRQn);
+ 80007f2:	2006      	movs	r0, #6
+ 80007f4:	f7ff fd08 	bl	8000208 <__NVIC_EnableIRQ>
+
+       tmpreg= NVIC_GetPriorityGrouping();  //CONFIGURAMOS EL EL NVIC DEL EXTI1
+ 80007f8:	f7ff fcf8 	bl	80001ec <__NVIC_GetPriorityGrouping>
+ 80007fc:	6078      	str	r0, [r7, #4]
+               NVIC_SetPriority(EXTI1_IRQn,14);
+ 80007fe:	210e      	movs	r1, #14
+ 8000800:	2007      	movs	r0, #7
+ 8000802:	f7ff fd1f 	bl	8000244 <__NVIC_SetPriority>
+               NVIC_EnableIRQ(EXTI1_IRQn);
+ 8000806:	2007      	movs	r0, #7
+ 8000808:	f7ff fcfe 	bl	8000208 <__NVIC_EnableIRQ>
+
+          tmpreg= NVIC_GetPriorityGrouping();  //CONFIGURAMOS EL EL NVIC DEL EXTI2
+ 800080c:	f7ff fcee 	bl	80001ec <__NVIC_GetPriorityGrouping>
+ 8000810:	6078      	str	r0, [r7, #4]
+               NVIC_SetPriority(EXTI2_IRQn,15);
+ 8000812:	210f      	movs	r1, #15
+ 8000814:	2008      	movs	r0, #8
+ 8000816:	f7ff fd15 	bl	8000244 <__NVIC_SetPriority>
+               NVIC_EnableIRQ(EXTI2_IRQn);
+ 800081a:	2008      	movs	r0, #8
+ 800081c:	f7ff fcf4 	bl	8000208 <__NVIC_EnableIRQ>
+
+    tmpreg= NVIC_GetPriorityGrouping(); //CONFIGURAMOS EL EL NVIC DEL EXTI4
+ 8000820:	f7ff fce4 	bl	80001ec <__NVIC_GetPriorityGrouping>
+ 8000824:	6078      	str	r0, [r7, #4]
+       NVIC_SetPriority(EXTI4_IRQn,17);
+ 8000826:	2111      	movs	r1, #17
+ 8000828:	200a      	movs	r0, #10
+ 800082a:	f7ff fd0b 	bl	8000244 <__NVIC_SetPriority>
+       NVIC_EnableIRQ(EXTI4_IRQn);
+ 800082e:	200a      	movs	r0, #10
+ 8000830:	f7ff fcea 	bl	8000208 <__NVIC_EnableIRQ>
+
+    tmpreg= NVIC_GetPriorityGrouping();//CONFIGURAMOS EL NVIC DEL EXTI8
+ 8000834:	f7ff fcda 	bl	80001ec <__NVIC_GetPriorityGrouping>
+ 8000838:	6078      	str	r0, [r7, #4]
+       NVIC_SetPriority(EXTI9_5_IRQn,NVIC_EncodePriority(tmpreg,0,0));
+ 800083a:	2200      	movs	r2, #0
+ 800083c:	2100      	movs	r1, #0
+ 800083e:	6878      	ldr	r0, [r7, #4]
+ 8000840:	f7ff fd2a 	bl	8000298 <NVIC_EncodePriority>
+ 8000844:	4603      	mov	r3, r0
+ 8000846:	4619      	mov	r1, r3
+ 8000848:	2017      	movs	r0, #23
+ 800084a:	f7ff fcfb 	bl	8000244 <__NVIC_SetPriority>
+       NVIC_EnableIRQ(EXTI9_5_IRQn);
+ 800084e:	2017      	movs	r0, #23
+ 8000850:	f7ff fcda 	bl	8000208 <__NVIC_EnableIRQ>
+
+    tmpreg= NVIC_GetPriorityGrouping();//CONFIGURAMOS EL NVIC DEL EXTI12
+ 8000854:	f7ff fcca 	bl	80001ec <__NVIC_GetPriorityGrouping>
+ 8000858:	6078      	str	r0, [r7, #4]
+       NVIC_SetPriority(EXTI15_10_IRQn,NVIC_EncodePriority(tmpreg,0,0));
+ 800085a:	2200      	movs	r2, #0
+ 800085c:	2100      	movs	r1, #0
+ 800085e:	6878      	ldr	r0, [r7, #4]
+ 8000860:	f7ff fd1a 	bl	8000298 <NVIC_EncodePriority>
+ 8000864:	4603      	mov	r3, r0
+ 8000866:	e00f      	b.n	8000888 <ConfiguraPerifericos+0x2d4>
+ 8000868:	40023800 	.word	0x40023800
+ 800086c:	40020800 	.word	0x40020800
+ 8000870:	40020400 	.word	0x40020400
+ 8000874:	40020c00 	.word	0x40020c00
+ 8000878:	40013800 	.word	0x40013800
+ 800087c:	40013c00 	.word	0x40013c00
+ 8000880:	40000400 	.word	0x40000400
+ 8000884:	00015f90 	.word	0x00015f90
+ 8000888:	4619      	mov	r1, r3
+ 800088a:	2028      	movs	r0, #40	; 0x28
+ 800088c:	f7ff fcda 	bl	8000244 <__NVIC_SetPriority>
+       NVIC_EnableIRQ(EXTI15_10_IRQn);
+ 8000890:	2028      	movs	r0, #40	; 0x28
+ 8000892:	f7ff fcb9 	bl	8000208 <__NVIC_EnableIRQ>
+    tmpreg=tmpreg;
+
+
+
+
+}
+ 8000896:	bf00      	nop
+ 8000898:	3708      	adds	r7, #8
+ 800089a:	46bd      	mov	sp, r7
+ 800089c:	bd80      	pop	{r7, pc}
+ 800089e:	bf00      	nop
+
+080008a0 <concaA>:
+
+char concaA(int num)
+{
+ 80008a0:	b480      	push	{r7}
+ 80008a2:	b083      	sub	sp, #12
+ 80008a4:	af00      	add	r7, sp, #0
+ 80008a6:	6078      	str	r0, [r7, #4]
+	return num + '0';
+ 80008a8:	687b      	ldr	r3, [r7, #4]
+ 80008aa:	b2db      	uxtb	r3, r3
+ 80008ac:	3330      	adds	r3, #48	; 0x30
+ 80008ae:	b2db      	uxtb	r3, r3
+}
+ 80008b0:	4618      	mov	r0, r3
+ 80008b2:	370c      	adds	r7, #12
+ 80008b4:	46bd      	mov	sp, r7
+ 80008b6:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80008ba:	4770      	bx	lr
+
+080008bc <delay_X>:
+
+
+ void delay_X(uint32_t nTime)  { while (nTime--);}
+ 80008bc:	b480      	push	{r7}
+ 80008be:	b083      	sub	sp, #12
+ 80008c0:	af00      	add	r7, sp, #0
+ 80008c2:	6078      	str	r0, [r7, #4]
+ 80008c4:	bf00      	nop
+ 80008c6:	687b      	ldr	r3, [r7, #4]
+ 80008c8:	1e5a      	subs	r2, r3, #1
+ 80008ca:	607a      	str	r2, [r7, #4]
+ 80008cc:	2b00      	cmp	r3, #0
+ 80008ce:	d1fa      	bne.n	80008c6 <delay_X+0xa>
+ 80008d0:	bf00      	nop
+ 80008d2:	bf00      	nop
+ 80008d4:	370c      	adds	r7, #12
+ 80008d6:	46bd      	mov	sp, r7
+ 80008d8:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80008dc:	4770      	bx	lr
+
+080008de <delay_ms>:
+ void delay_ms(uint32_t nTime) { while (nTime--) {delay_X(58823);}}
+ 80008de:	b580      	push	{r7, lr}
+ 80008e0:	b082      	sub	sp, #8
+ 80008e2:	af00      	add	r7, sp, #0
+ 80008e4:	6078      	str	r0, [r7, #4]
+ 80008e6:	e003      	b.n	80008f0 <delay_ms+0x12>
+ 80008e8:	f24e 50c7 	movw	r0, #58823	; 0xe5c7
+ 80008ec:	f7ff ffe6 	bl	80008bc <delay_X>
+ 80008f0:	687b      	ldr	r3, [r7, #4]
+ 80008f2:	1e5a      	subs	r2, r3, #1
+ 80008f4:	607a      	str	r2, [r7, #4]
+ 80008f6:	2b00      	cmp	r3, #0
+ 80008f8:	d1f6      	bne.n	80008e8 <delay_ms+0xa>
+ 80008fa:	bf00      	nop
+ 80008fc:	bf00      	nop
+ 80008fe:	3708      	adds	r7, #8
+ 8000900:	46bd      	mov	sp, r7
+ 8000902:	bd80      	pop	{r7, pc}
+
+08000904 <TIM3_IRQHandler>:
+
+
+
+
+ void  TIM3_IRQHandler (void)     //void del timer
+       {
+ 8000904:	b480      	push	{r7}
+ 8000906:	b083      	sub	sp, #12
+ 8000908:	af00      	add	r7, sp, #0
+        uint32_t tmpreg=0x0000000;
+ 800090a:	2300      	movs	r3, #0
+ 800090c:	607b      	str	r3, [r7, #4]
+ 	   if((GPIOA-> IDR & 0X0000001)==0X00000001)
+ 800090e:	4b13      	ldr	r3, [pc, #76]	; (800095c <TIM3_IRQHandler+0x58>)
+ 8000910:	691b      	ldr	r3, [r3, #16]
+ 8000912:	f003 0301 	and.w	r3, r3, #1
+ 8000916:	2b01      	cmp	r3, #1
+ 8000918:	d108      	bne.n	800092c <TIM3_IRQHandler+0x28>
+ 	   {
+ 		   GPIOA -> BSRR =0X0000001;
+ 800091a:	4b10      	ldr	r3, [pc, #64]	; (800095c <TIM3_IRQHandler+0x58>)
+ 800091c:	2201      	movs	r2, #1
+ 800091e:	619a      	str	r2, [r3, #24]
+ 		   SS++;
+ 8000920:	4b0f      	ldr	r3, [pc, #60]	; (8000960 <TIM3_IRQHandler+0x5c>)
+ 8000922:	681b      	ldr	r3, [r3, #0]
+ 8000924:	3301      	adds	r3, #1
+ 8000926:	4a0e      	ldr	r2, [pc, #56]	; (8000960 <TIM3_IRQHandler+0x5c>)
+ 8000928:	6013      	str	r3, [r2, #0]
+ 800092a:	e003      	b.n	8000934 <TIM3_IRQHandler+0x30>
+ 	   }
+ 	   else GPIOA->BSRR =0X00010000;
+ 800092c:	4b0b      	ldr	r3, [pc, #44]	; (800095c <TIM3_IRQHandler+0x58>)
+ 800092e:	f44f 3280 	mov.w	r2, #65536	; 0x10000
+ 8000932:	619a      	str	r2, [r3, #24]
+
+ 	   {
+           SS++;
+ 8000934:	4b0a      	ldr	r3, [pc, #40]	; (8000960 <TIM3_IRQHandler+0x5c>)
+ 8000936:	681b      	ldr	r3, [r3, #0]
+ 8000938:	3301      	adds	r3, #1
+ 800093a:	4a09      	ldr	r2, [pc, #36]	; (8000960 <TIM3_IRQHandler+0x5c>)
+ 800093c:	6013      	str	r3, [r2, #0]
+       }
+ 	   TIM3->SR = 0X00000000;
+ 800093e:	4b09      	ldr	r3, [pc, #36]	; (8000964 <TIM3_IRQHandler+0x60>)
+ 8000940:	2200      	movs	r2, #0
+ 8000942:	611a      	str	r2, [r3, #16]
+ 	   tmpreg = TIM3->SR;
+ 8000944:	4b07      	ldr	r3, [pc, #28]	; (8000964 <TIM3_IRQHandler+0x60>)
+ 8000946:	691b      	ldr	r3, [r3, #16]
+ 8000948:	607b      	str	r3, [r7, #4]
+ 	   tmpreg =tmpreg/2;
+ 800094a:	687b      	ldr	r3, [r7, #4]
+ 800094c:	085b      	lsrs	r3, r3, #1
+ 800094e:	607b      	str	r3, [r7, #4]
+       }
+ 8000950:	bf00      	nop
+ 8000952:	370c      	adds	r7, #12
+ 8000954:	46bd      	mov	sp, r7
+ 8000956:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 800095a:	4770      	bx	lr
+ 800095c:	40020000 	.word	0x40020000
+ 8000960:	20000020 	.word	0x20000020
+ 8000964:	40000400 	.word	0x40000400
+
+08000968 <EXTI0_IRQHandler>:
+
+ void EXTI0_IRQHandler(void)
+ {
+ 8000968:	b480      	push	{r7}
+ 800096a:	af00      	add	r7, sp, #0
+    var1=1;
+ 800096c:	4b05      	ldr	r3, [pc, #20]	; (8000984 <EXTI0_IRQHandler+0x1c>)
+ 800096e:	2201      	movs	r2, #1
+ 8000970:	601a      	str	r2, [r3, #0]
+ 	EXTI -> PR =   ((uint32_t)0x00000001);
+ 8000972:	4b05      	ldr	r3, [pc, #20]	; (8000988 <EXTI0_IRQHandler+0x20>)
+ 8000974:	2201      	movs	r2, #1
+ 8000976:	615a      	str	r2, [r3, #20]
+
+
+ }
+ 8000978:	bf00      	nop
+ 800097a:	46bd      	mov	sp, r7
+ 800097c:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000980:	4770      	bx	lr
+ 8000982:	bf00      	nop
+ 8000984:	2000002c 	.word	0x2000002c
+ 8000988:	40013c00 	.word	0x40013c00
+
+0800098c <EXTI4_IRQHandler>:
+
+
+
+ void EXTI4_IRQHandler(void)
+ {
+ 800098c:	b480      	push	{r7}
+ 800098e:	af00      	add	r7, sp, #0
+       var1=2;
+ 8000990:	4b05      	ldr	r3, [pc, #20]	; (80009a8 <EXTI4_IRQHandler+0x1c>)
+ 8000992:	2202      	movs	r2, #2
+ 8000994:	601a      	str	r2, [r3, #0]
+	   EXTI -> PR =((uint32_t)0x00000010);
+ 8000996:	4b05      	ldr	r3, [pc, #20]	; (80009ac <EXTI4_IRQHandler+0x20>)
+ 8000998:	2210      	movs	r2, #16
+ 800099a:	615a      	str	r2, [r3, #20]
+
+
+ }
+ 800099c:	bf00      	nop
+ 800099e:	46bd      	mov	sp, r7
+ 80009a0:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80009a4:	4770      	bx	lr
+ 80009a6:	bf00      	nop
+ 80009a8:	2000002c 	.word	0x2000002c
+ 80009ac:	40013c00 	.word	0x40013c00
+
+080009b0 <EXTI1_IRQHandler>:
+
+ void EXTI1_IRQHandler(void) //void de la interrupcion EXT0 boton izquerda d1
+     {
+ 80009b0:	b480      	push	{r7}
+ 80009b2:	af00      	add	r7, sp, #0
+	 if((EXTI->PR & 0X00000002)==0X00000002)
+ 80009b4:	4b09      	ldr	r3, [pc, #36]	; (80009dc <EXTI1_IRQHandler+0x2c>)
+ 80009b6:	695b      	ldr	r3, [r3, #20]
+ 80009b8:	f003 0302 	and.w	r3, r3, #2
+ 80009bc:	2b02      	cmp	r3, #2
+ 80009be:	d104      	bne.n	80009ca <EXTI1_IRQHandler+0x1a>
+		  {
+			MM++;
+ 80009c0:	4b07      	ldr	r3, [pc, #28]	; (80009e0 <EXTI1_IRQHandler+0x30>)
+ 80009c2:	681b      	ldr	r3, [r3, #0]
+ 80009c4:	3301      	adds	r3, #1
+ 80009c6:	4a06      	ldr	r2, [pc, #24]	; (80009e0 <EXTI1_IRQHandler+0x30>)
+ 80009c8:	6013      	str	r3, [r2, #0]
+		  }
+	    	EXTI -> PR =   ((uint32_t)0x00000002);
+ 80009ca:	4b04      	ldr	r3, [pc, #16]	; (80009dc <EXTI1_IRQHandler+0x2c>)
+ 80009cc:	2202      	movs	r2, #2
+ 80009ce:	615a      	str	r2, [r3, #20]
+
+
+     }
+ 80009d0:	bf00      	nop
+ 80009d2:	46bd      	mov	sp, r7
+ 80009d4:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80009d8:	4770      	bx	lr
+ 80009da:	bf00      	nop
+ 80009dc:	40013c00 	.word	0x40013c00
+ 80009e0:	20000024 	.word	0x20000024
+
+080009e4 <EXTI2_IRQHandler>:
+
+   void EXTI2_IRQHandler(void) //void de la interrupcion EXT0 boton izquerda d2
+     {
+ 80009e4:	b480      	push	{r7}
+ 80009e6:	af00      	add	r7, sp, #0
+	   if((EXTI->PR & 0X00000004)==0X00000004)
+ 80009e8:	4b09      	ldr	r3, [pc, #36]	; (8000a10 <EXTI2_IRQHandler+0x2c>)
+ 80009ea:	695b      	ldr	r3, [r3, #20]
+ 80009ec:	f003 0304 	and.w	r3, r3, #4
+ 80009f0:	2b04      	cmp	r3, #4
+ 80009f2:	d104      	bne.n	80009fe <EXTI2_IRQHandler+0x1a>
+	   	 	  {
+	   	 		HH++;
+ 80009f4:	4b07      	ldr	r3, [pc, #28]	; (8000a14 <EXTI2_IRQHandler+0x30>)
+ 80009f6:	681b      	ldr	r3, [r3, #0]
+ 80009f8:	3301      	adds	r3, #1
+ 80009fa:	4a06      	ldr	r2, [pc, #24]	; (8000a14 <EXTI2_IRQHandler+0x30>)
+ 80009fc:	6013      	str	r3, [r2, #0]
+	   	 	  }
+	     	   EXTI -> PR =   ((uint32_t)0x00000004);
+ 80009fe:	4b04      	ldr	r3, [pc, #16]	; (8000a10 <EXTI2_IRQHandler+0x2c>)
+ 8000a00:	2204      	movs	r2, #4
+ 8000a02:	615a      	str	r2, [r3, #20]
+
+     }
+ 8000a04:	bf00      	nop
+ 8000a06:	46bd      	mov	sp, r7
+ 8000a08:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000a0c:	4770      	bx	lr
+ 8000a0e:	bf00      	nop
+ 8000a10:	40013c00 	.word	0x40013c00
+ 8000a14:	20000028 	.word	0x20000028
+
+08000a18 <EXTI9_5_IRQHandler>:
+
+
+
+ void EXTI9_5_IRQHandler(void)
+ {
+ 8000a18:	b480      	push	{r7}
+ 8000a1a:	af00      	add	r7, sp, #0
+       var2=3;
+ 8000a1c:	4b05      	ldr	r3, [pc, #20]	; (8000a34 <EXTI9_5_IRQHandler+0x1c>)
+ 8000a1e:	2203      	movs	r2, #3
+ 8000a20:	601a      	str	r2, [r3, #0]
+	   EXTI -> PR =   ((uint32_t)0x0000100);
+ 8000a22:	4b05      	ldr	r3, [pc, #20]	; (8000a38 <EXTI9_5_IRQHandler+0x20>)
+ 8000a24:	f44f 7280 	mov.w	r2, #256	; 0x100
+ 8000a28:	615a      	str	r2, [r3, #20]
+ }
+ 8000a2a:	bf00      	nop
+ 8000a2c:	46bd      	mov	sp, r7
+ 8000a2e:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000a32:	4770      	bx	lr
+ 8000a34:	20000030 	.word	0x20000030
+ 8000a38:	40013c00 	.word	0x40013c00
+
+08000a3c <EXTI15_10_IRQHandler>:
+
+
+ void EXTI15_10_IRQHandler(void)
+  {
+ 8000a3c:	b480      	push	{r7}
+ 8000a3e:	af00      	add	r7, sp, #0
+
+       var2=4;
+ 8000a40:	4b05      	ldr	r3, [pc, #20]	; (8000a58 <EXTI15_10_IRQHandler+0x1c>)
+ 8000a42:	2204      	movs	r2, #4
+ 8000a44:	601a      	str	r2, [r3, #0]
+	   EXTI -> PR =   ((uint32_t)0x0001000);
+ 8000a46:	4b05      	ldr	r3, [pc, #20]	; (8000a5c <EXTI15_10_IRQHandler+0x20>)
+ 8000a48:	f44f 5280 	mov.w	r2, #4096	; 0x1000
+ 8000a4c:	615a      	str	r2, [r3, #20]
+
+
+  }
+ 8000a4e:	bf00      	nop
+ 8000a50:	46bd      	mov	sp, r7
+ 8000a52:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000a56:	4770      	bx	lr
+ 8000a58:	20000030 	.word	0x20000030
+ 8000a5c:	40013c00 	.word	0x40013c00
+
+08000a60 <izquierda>:
+
+ void izquierda(void)
+ {
+ 8000a60:	b580      	push	{r7, lr}
+ 8000a62:	af00      	add	r7, sp, #0
+	 LCD_Cadena(1,1,"izquierda ");
+ 8000a64:	4a17      	ldr	r2, [pc, #92]	; (8000ac4 <izquierda+0x64>)
+ 8000a66:	2101      	movs	r1, #1
+ 8000a68:	2001      	movs	r0, #1
+ 8000a6a:	f7ff fd4d 	bl	8000508 <LCD_Cadena>
+	 LCD_Cadena(2,3,":");
+ 8000a6e:	4a16      	ldr	r2, [pc, #88]	; (8000ac8 <izquierda+0x68>)
+ 8000a70:	2103      	movs	r1, #3
+ 8000a72:	2002      	movs	r0, #2
+ 8000a74:	f7ff fd48 	bl	8000508 <LCD_Cadena>
+	 LCD_Cadena(2,6,":");
+ 8000a78:	4a13      	ldr	r2, [pc, #76]	; (8000ac8 <izquierda+0x68>)
+ 8000a7a:	2106      	movs	r1, #6
+ 8000a7c:	2002      	movs	r0, #2
+ 8000a7e:	f7ff fd43 	bl	8000508 <LCD_Cadena>
+	 LCD_Home();
+ 8000a82:	f7ff fd1a 	bl	80004ba <LCD_Home>
+     LCD_Clear();
+ 8000a86:	f7ff fd11 	bl	80004ac <LCD_Clear>
+           	  GPIOC->ODR  =(uint32_t)0x00000001;
+ 8000a8a:	4b10      	ldr	r3, [pc, #64]	; (8000acc <izquierda+0x6c>)
+ 8000a8c:	2201      	movs	r2, #1
+ 8000a8e:	615a      	str	r2, [r3, #20]
+	          delay_ms(del);
+ 8000a90:	4b0f      	ldr	r3, [pc, #60]	; (8000ad0 <izquierda+0x70>)
+ 8000a92:	781b      	ldrb	r3, [r3, #0]
+ 8000a94:	4618      	mov	r0, r3
+ 8000a96:	f7ff ff22 	bl	80008de <delay_ms>
+	          GPIOC->ODR  =(uint32_t)0x00000002;
+ 8000a9a:	4b0c      	ldr	r3, [pc, #48]	; (8000acc <izquierda+0x6c>)
+ 8000a9c:	2202      	movs	r2, #2
+ 8000a9e:	615a      	str	r2, [r3, #20]
+	          delay_ms(del);
+ 8000aa0:	4b0b      	ldr	r3, [pc, #44]	; (8000ad0 <izquierda+0x70>)
+ 8000aa2:	781b      	ldrb	r3, [r3, #0]
+ 8000aa4:	4618      	mov	r0, r3
+ 8000aa6:	f7ff ff1a 	bl	80008de <delay_ms>
+	          GPIOC->ODR  =(uint32_t)0x00000004;
+ 8000aaa:	4b08      	ldr	r3, [pc, #32]	; (8000acc <izquierda+0x6c>)
+ 8000aac:	2204      	movs	r2, #4
+ 8000aae:	615a      	str	r2, [r3, #20]
+	          delay_ms(del);
+ 8000ab0:	4b07      	ldr	r3, [pc, #28]	; (8000ad0 <izquierda+0x70>)
+ 8000ab2:	781b      	ldrb	r3, [r3, #0]
+ 8000ab4:	4618      	mov	r0, r3
+ 8000ab6:	f7ff ff12 	bl	80008de <delay_ms>
+	          GPIOC->ODR  =(uint32_t)0x00000008;
+ 8000aba:	4b04      	ldr	r3, [pc, #16]	; (8000acc <izquierda+0x6c>)
+ 8000abc:	2208      	movs	r2, #8
+ 8000abe:	615a      	str	r2, [r3, #20]
+
+ }
+ 8000ac0:	bf00      	nop
+ 8000ac2:	bd80      	pop	{r7, pc}
+ 8000ac4:	080018cc 	.word	0x080018cc
+ 8000ac8:	080018c8 	.word	0x080018c8
+ 8000acc:	40020800 	.word	0x40020800
+ 8000ad0:	20000000 	.word	0x20000000
+
+08000ad4 <derecha>:
+
+
+ void derecha (void)
+ {
+ 8000ad4:	b580      	push	{r7, lr}
+ 8000ad6:	af00      	add	r7, sp, #0
+	 LCD_Cadena(1,1,"derecha ");
+ 8000ad8:	4a17      	ldr	r2, [pc, #92]	; (8000b38 <derecha+0x64>)
+ 8000ada:	2101      	movs	r1, #1
+ 8000adc:	2001      	movs	r0, #1
+ 8000ade:	f7ff fd13 	bl	8000508 <LCD_Cadena>
+	 LCD_Cadena(2,3,":");
+ 8000ae2:	4a16      	ldr	r2, [pc, #88]	; (8000b3c <derecha+0x68>)
+ 8000ae4:	2103      	movs	r1, #3
+ 8000ae6:	2002      	movs	r0, #2
+ 8000ae8:	f7ff fd0e 	bl	8000508 <LCD_Cadena>
+     LCD_Cadena(2,6,":");
+ 8000aec:	4a13      	ldr	r2, [pc, #76]	; (8000b3c <derecha+0x68>)
+ 8000aee:	2106      	movs	r1, #6
+ 8000af0:	2002      	movs	r0, #2
+ 8000af2:	f7ff fd09 	bl	8000508 <LCD_Cadena>
+	 LCD_Home();
+ 8000af6:	f7ff fce0 	bl	80004ba <LCD_Home>
+	 LCD_Clear();
+ 8000afa:	f7ff fcd7 	bl	80004ac <LCD_Clear>
+           	  GPIOC->ODR  =(uint32_t)0x00000008;
+ 8000afe:	4b10      	ldr	r3, [pc, #64]	; (8000b40 <derecha+0x6c>)
+ 8000b00:	2208      	movs	r2, #8
+ 8000b02:	615a      	str	r2, [r3, #20]
+	          delay_ms(del);
+ 8000b04:	4b0f      	ldr	r3, [pc, #60]	; (8000b44 <derecha+0x70>)
+ 8000b06:	781b      	ldrb	r3, [r3, #0]
+ 8000b08:	4618      	mov	r0, r3
+ 8000b0a:	f7ff fee8 	bl	80008de <delay_ms>
+	          GPIOC->ODR  =(uint32_t)0x00000004;
+ 8000b0e:	4b0c      	ldr	r3, [pc, #48]	; (8000b40 <derecha+0x6c>)
+ 8000b10:	2204      	movs	r2, #4
+ 8000b12:	615a      	str	r2, [r3, #20]
+	          delay_ms(del);
+ 8000b14:	4b0b      	ldr	r3, [pc, #44]	; (8000b44 <derecha+0x70>)
+ 8000b16:	781b      	ldrb	r3, [r3, #0]
+ 8000b18:	4618      	mov	r0, r3
+ 8000b1a:	f7ff fee0 	bl	80008de <delay_ms>
+	          GPIOC->ODR  =(uint32_t)0x00000002;
+ 8000b1e:	4b08      	ldr	r3, [pc, #32]	; (8000b40 <derecha+0x6c>)
+ 8000b20:	2202      	movs	r2, #2
+ 8000b22:	615a      	str	r2, [r3, #20]
+	          delay_ms(del);
+ 8000b24:	4b07      	ldr	r3, [pc, #28]	; (8000b44 <derecha+0x70>)
+ 8000b26:	781b      	ldrb	r3, [r3, #0]
+ 8000b28:	4618      	mov	r0, r3
+ 8000b2a:	f7ff fed8 	bl	80008de <delay_ms>
+	          GPIOC->ODR  =(uint32_t)0x00000001;
+ 8000b2e:	4b04      	ldr	r3, [pc, #16]	; (8000b40 <derecha+0x6c>)
+ 8000b30:	2201      	movs	r2, #1
+ 8000b32:	615a      	str	r2, [r3, #20]
+ }
+ 8000b34:	bf00      	nop
+ 8000b36:	bd80      	pop	{r7, pc}
+ 8000b38:	080018d8 	.word	0x080018d8
+ 8000b3c:	080018c8 	.word	0x080018c8
+ 8000b40:	40020800 	.word	0x40020800
+ 8000b44:	20000000 	.word	0x20000000
+
+08000b48 <stop>:
+
+ void stop (void)
+ {
+ 8000b48:	b580      	push	{r7, lr}
+ 8000b4a:	af00      	add	r7, sp, #0
+	 LCD_Cadena(1,1,"parar ");
+ 8000b4c:	4a09      	ldr	r2, [pc, #36]	; (8000b74 <stop+0x2c>)
+ 8000b4e:	2101      	movs	r1, #1
+ 8000b50:	2001      	movs	r0, #1
+ 8000b52:	f7ff fcd9 	bl	8000508 <LCD_Cadena>
+	 LCD_Cadena(2,3,":");
+ 8000b56:	4a08      	ldr	r2, [pc, #32]	; (8000b78 <stop+0x30>)
+ 8000b58:	2103      	movs	r1, #3
+ 8000b5a:	2002      	movs	r0, #2
+ 8000b5c:	f7ff fcd4 	bl	8000508 <LCD_Cadena>
+	 LCD_Cadena(2,6,":");
+ 8000b60:	4a05      	ldr	r2, [pc, #20]	; (8000b78 <stop+0x30>)
+ 8000b62:	2106      	movs	r1, #6
+ 8000b64:	2002      	movs	r0, #2
+ 8000b66:	f7ff fccf 	bl	8000508 <LCD_Cadena>
+
+
+	          GPIOC-> ODR= (uint32_t)0X00000010;
+ 8000b6a:	4b04      	ldr	r3, [pc, #16]	; (8000b7c <stop+0x34>)
+ 8000b6c:	2210      	movs	r2, #16
+ 8000b6e:	615a      	str	r2, [r3, #20]
+
+ }
+ 8000b70:	bf00      	nop
+ 8000b72:	bd80      	pop	{r7, pc}
+ 8000b74:	080018e4 	.word	0x080018e4
+ 8000b78:	080018c8 	.word	0x080018c8
+ 8000b7c:	40020800 	.word	0x40020800
+
+08000b80 <start>:
+
+
+void start(void)
+{
+ 8000b80:	b580      	push	{r7, lr}
+ 8000b82:	af00      	add	r7, sp, #0
+
+	LCD_Cadena(1,1,"inicio ");
+ 8000b84:	4a0b      	ldr	r2, [pc, #44]	; (8000bb4 <start+0x34>)
+ 8000b86:	2101      	movs	r1, #1
+ 8000b88:	2001      	movs	r0, #1
+ 8000b8a:	f7ff fcbd 	bl	8000508 <LCD_Cadena>
+    GPIOC-> ODR= (uint32_t)0X00000020;
+ 8000b8e:	4b0a      	ldr	r3, [pc, #40]	; (8000bb8 <start+0x38>)
+ 8000b90:	2220      	movs	r2, #32
+ 8000b92:	615a      	str	r2, [r3, #20]
+
+	switch(var2)
+ 8000b94:	4b09      	ldr	r3, [pc, #36]	; (8000bbc <start+0x3c>)
+ 8000b96:	681b      	ldr	r3, [r3, #0]
+ 8000b98:	2b03      	cmp	r3, #3
+ 8000b9a:	d002      	beq.n	8000ba2 <start+0x22>
+ 8000b9c:	2b04      	cmp	r3, #4
+ 8000b9e:	d003      	beq.n	8000ba8 <start+0x28>
+	{
+    case 3: izquierda();break;
+    case 4: derecha();break;
+	   default:;
+	}
+	}
+ 8000ba0:	e005      	b.n	8000bae <start+0x2e>
+    case 3: izquierda();break;
+ 8000ba2:	f7ff ff5d 	bl	8000a60 <izquierda>
+ 8000ba6:	e002      	b.n	8000bae <start+0x2e>
+    case 4: derecha();break;
+ 8000ba8:	f7ff ff94 	bl	8000ad4 <derecha>
+ 8000bac:	bf00      	nop
+	}
+ 8000bae:	bf00      	nop
+ 8000bb0:	bd80      	pop	{r7, pc}
+ 8000bb2:	bf00      	nop
+ 8000bb4:	080018ec 	.word	0x080018ec
+ 8000bb8:	40020800 	.word	0x40020800
+ 8000bbc:	20000030 	.word	0x20000030
+
+08000bc0 <display>:
+
+
+
+	 void display(void)  //FUNCIONAMIENTO PRINCIPAL
+	  {
+ 8000bc0:	b580      	push	{r7, lr}
+ 8000bc2:	af00      	add	r7, sp, #0
+		           seg();
+ 8000bc4:	f000 f830 	bl	8000c28 <seg>
+		 		   min();
+ 8000bc8:	f000 fa8c 	bl	80010e4 <min>
+		 		  hhrs();
+ 8000bcc:	f000 fce8 	bl	80015a0 <hhrs>
+
+
+		 		 if(SS==59)
+ 8000bd0:	4b12      	ldr	r3, [pc, #72]	; (8000c1c <display+0x5c>)
+ 8000bd2:	681b      	ldr	r3, [r3, #0]
+ 8000bd4:	2b3b      	cmp	r3, #59	; 0x3b
+ 8000bd6:	d10c      	bne.n	8000bf2 <display+0x32>
+		 		 {
+		 			 SS=0;
+ 8000bd8:	4b10      	ldr	r3, [pc, #64]	; (8000c1c <display+0x5c>)
+ 8000bda:	2200      	movs	r2, #0
+ 8000bdc:	601a      	str	r2, [r3, #0]
+		 			 concaA(SS);
+ 8000bde:	4b0f      	ldr	r3, [pc, #60]	; (8000c1c <display+0x5c>)
+ 8000be0:	681b      	ldr	r3, [r3, #0]
+ 8000be2:	4618      	mov	r0, r3
+ 8000be4:	f7ff fe5c 	bl	80008a0 <concaA>
+		 			 MM++
+ 8000be8:	4b0d      	ldr	r3, [pc, #52]	; (8000c20 <display+0x60>)
+ 8000bea:	681b      	ldr	r3, [r3, #0]
+ 8000bec:	3301      	adds	r3, #1
+ 8000bee:	4a0c      	ldr	r2, [pc, #48]	; (8000c20 <display+0x60>)
+ 8000bf0:	6013      	str	r3, [r2, #0]
+		 			 ;
+		 		 }if(MM>60)
+ 8000bf2:	4b0b      	ldr	r3, [pc, #44]	; (8000c20 <display+0x60>)
+ 8000bf4:	681b      	ldr	r3, [r3, #0]
+ 8000bf6:	2b3c      	cmp	r3, #60	; 0x3c
+ 8000bf8:	dd07      	ble.n	8000c0a <display+0x4a>
+		 		 {
+		 		     MM=0;
+ 8000bfa:	4b09      	ldr	r3, [pc, #36]	; (8000c20 <display+0x60>)
+ 8000bfc:	2200      	movs	r2, #0
+ 8000bfe:	601a      	str	r2, [r3, #0]
+		 		     HH++;
+ 8000c00:	4b08      	ldr	r3, [pc, #32]	; (8000c24 <display+0x64>)
+ 8000c02:	681b      	ldr	r3, [r3, #0]
+ 8000c04:	3301      	adds	r3, #1
+ 8000c06:	4a07      	ldr	r2, [pc, #28]	; (8000c24 <display+0x64>)
+ 8000c08:	6013      	str	r3, [r2, #0]
+
+		 		 }if(HH>23)
+ 8000c0a:	4b06      	ldr	r3, [pc, #24]	; (8000c24 <display+0x64>)
+ 8000c0c:	681b      	ldr	r3, [r3, #0]
+ 8000c0e:	2b17      	cmp	r3, #23
+ 8000c10:	dd02      	ble.n	8000c18 <display+0x58>
+		 		 {
+		 			 HH=0;
+ 8000c12:	4b04      	ldr	r3, [pc, #16]	; (8000c24 <display+0x64>)
+ 8000c14:	2200      	movs	r2, #0
+ 8000c16:	601a      	str	r2, [r3, #0]
+		 		 }
+		 		 }
+ 8000c18:	bf00      	nop
+ 8000c1a:	bd80      	pop	{r7, pc}
+ 8000c1c:	20000020 	.word	0x20000020
+ 8000c20:	20000024 	.word	0x20000024
+ 8000c24:	20000028 	.word	0x20000028
+
+08000c28 <seg>:
+
+
+
+
+	 void seg(void) //DISPLAY SEGUNDOS
+	   {
+ 8000c28:	b580      	push	{r7, lr}
+ 8000c2a:	af00      	add	r7, sp, #0
+
+		   switch(SS)
+ 8000c2c:	4bc9      	ldr	r3, [pc, #804]	; (8000f54 <seg+0x32c>)
+ 8000c2e:	681b      	ldr	r3, [r3, #0]
+ 8000c30:	2b3b      	cmp	r3, #59	; 0x3b
+ 8000c32:	f200 823b 	bhi.w	80010ac <seg+0x484>
+ 8000c36:	a201      	add	r2, pc, #4	; (adr r2, 8000c3c <seg+0x14>)
+ 8000c38:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 8000c3c:	08000d2d 	.word	0x08000d2d
+ 8000c40:	08000d39 	.word	0x08000d39
+ 8000c44:	08000d45 	.word	0x08000d45
+ 8000c48:	08000d51 	.word	0x08000d51
+ 8000c4c:	08000d5d 	.word	0x08000d5d
+ 8000c50:	08000d69 	.word	0x08000d69
+ 8000c54:	08000d75 	.word	0x08000d75
+ 8000c58:	08000d81 	.word	0x08000d81
+ 8000c5c:	08000d8d 	.word	0x08000d8d
+ 8000c60:	08000d99 	.word	0x08000d99
+ 8000c64:	08000da5 	.word	0x08000da5
+ 8000c68:	08000db1 	.word	0x08000db1
+ 8000c6c:	08000dbd 	.word	0x08000dbd
+ 8000c70:	08000dc9 	.word	0x08000dc9
+ 8000c74:	08000dd5 	.word	0x08000dd5
+ 8000c78:	08000de1 	.word	0x08000de1
+ 8000c7c:	08000ded 	.word	0x08000ded
+ 8000c80:	08000df9 	.word	0x08000df9
+ 8000c84:	08000e05 	.word	0x08000e05
+ 8000c88:	08000e11 	.word	0x08000e11
+ 8000c8c:	08000e1d 	.word	0x08000e1d
+ 8000c90:	08000e29 	.word	0x08000e29
+ 8000c94:	08000e35 	.word	0x08000e35
+ 8000c98:	08000e41 	.word	0x08000e41
+ 8000c9c:	08000e4d 	.word	0x08000e4d
+ 8000ca0:	08000e59 	.word	0x08000e59
+ 8000ca4:	08000e65 	.word	0x08000e65
+ 8000ca8:	08000e71 	.word	0x08000e71
+ 8000cac:	08000e7d 	.word	0x08000e7d
+ 8000cb0:	08000e89 	.word	0x08000e89
+ 8000cb4:	08000e95 	.word	0x08000e95
+ 8000cb8:	08000ea1 	.word	0x08000ea1
+ 8000cbc:	08000ead 	.word	0x08000ead
+ 8000cc0:	08000eb9 	.word	0x08000eb9
+ 8000cc4:	08000ec5 	.word	0x08000ec5
+ 8000cc8:	08000ed1 	.word	0x08000ed1
+ 8000ccc:	08000edd 	.word	0x08000edd
+ 8000cd0:	08000ee9 	.word	0x08000ee9
+ 8000cd4:	08000ef5 	.word	0x08000ef5
+ 8000cd8:	08000f01 	.word	0x08000f01
+ 8000cdc:	08000f0d 	.word	0x08000f0d
+ 8000ce0:	08000f19 	.word	0x08000f19
+ 8000ce4:	08000f25 	.word	0x08000f25
+ 8000ce8:	08000f31 	.word	0x08000f31
+ 8000cec:	080010ad 	.word	0x080010ad
+ 8000cf0:	08000f3d 	.word	0x08000f3d
+ 8000cf4:	08000f49 	.word	0x08000f49
+ 8000cf8:	08001011 	.word	0x08001011
+ 8000cfc:	0800101d 	.word	0x0800101d
+ 8000d00:	08001029 	.word	0x08001029
+ 8000d04:	08001035 	.word	0x08001035
+ 8000d08:	08001041 	.word	0x08001041
+ 8000d0c:	0800104d 	.word	0x0800104d
+ 8000d10:	08001059 	.word	0x08001059
+ 8000d14:	08001065 	.word	0x08001065
+ 8000d18:	08001071 	.word	0x08001071
+ 8000d1c:	0800107d 	.word	0x0800107d
+ 8000d20:	08001089 	.word	0x08001089
+ 8000d24:	08001095 	.word	0x08001095
+ 8000d28:	080010a1 	.word	0x080010a1
+		   		        {
+
+		   	    case 0: LCD_Cadena(2,7,"00"); break;
+ 8000d2c:	4a8a      	ldr	r2, [pc, #552]	; (8000f58 <seg+0x330>)
+ 8000d2e:	2107      	movs	r1, #7
+ 8000d30:	2002      	movs	r0, #2
+ 8000d32:	f7ff fbe9 	bl	8000508 <LCD_Cadena>
+ 8000d36:	e1b9      	b.n	80010ac <seg+0x484>
+		   	    case 1: LCD_Cadena(2,7,"01"); break;
+ 8000d38:	4a88      	ldr	r2, [pc, #544]	; (8000f5c <seg+0x334>)
+ 8000d3a:	2107      	movs	r1, #7
+ 8000d3c:	2002      	movs	r0, #2
+ 8000d3e:	f7ff fbe3 	bl	8000508 <LCD_Cadena>
+ 8000d42:	e1b3      	b.n	80010ac <seg+0x484>
+		   	    case 2: LCD_Cadena(2,7,"02"); break;
+ 8000d44:	4a86      	ldr	r2, [pc, #536]	; (8000f60 <seg+0x338>)
+ 8000d46:	2107      	movs	r1, #7
+ 8000d48:	2002      	movs	r0, #2
+ 8000d4a:	f7ff fbdd 	bl	8000508 <LCD_Cadena>
+ 8000d4e:	e1ad      	b.n	80010ac <seg+0x484>
+		        case 3: LCD_Cadena(2,7,"03"); break;
+ 8000d50:	4a84      	ldr	r2, [pc, #528]	; (8000f64 <seg+0x33c>)
+ 8000d52:	2107      	movs	r1, #7
+ 8000d54:	2002      	movs	r0, #2
+ 8000d56:	f7ff fbd7 	bl	8000508 <LCD_Cadena>
+ 8000d5a:	e1a7      	b.n	80010ac <seg+0x484>
+		   	    case 4: LCD_Cadena(2,7,"04"); break;
+ 8000d5c:	4a82      	ldr	r2, [pc, #520]	; (8000f68 <seg+0x340>)
+ 8000d5e:	2107      	movs	r1, #7
+ 8000d60:	2002      	movs	r0, #2
+ 8000d62:	f7ff fbd1 	bl	8000508 <LCD_Cadena>
+ 8000d66:	e1a1      	b.n	80010ac <seg+0x484>
+		   	    case 5: LCD_Cadena(2,7,"05"); break;
+ 8000d68:	4a80      	ldr	r2, [pc, #512]	; (8000f6c <seg+0x344>)
+ 8000d6a:	2107      	movs	r1, #7
+ 8000d6c:	2002      	movs	r0, #2
+ 8000d6e:	f7ff fbcb 	bl	8000508 <LCD_Cadena>
+ 8000d72:	e19b      	b.n	80010ac <seg+0x484>
+		   	    case 6: LCD_Cadena(2,7,"06"); break;
+ 8000d74:	4a7e      	ldr	r2, [pc, #504]	; (8000f70 <seg+0x348>)
+ 8000d76:	2107      	movs	r1, #7
+ 8000d78:	2002      	movs	r0, #2
+ 8000d7a:	f7ff fbc5 	bl	8000508 <LCD_Cadena>
+ 8000d7e:	e195      	b.n	80010ac <seg+0x484>
+		   	    case 7: LCD_Cadena(2,7,"07"); break;
+ 8000d80:	4a7c      	ldr	r2, [pc, #496]	; (8000f74 <seg+0x34c>)
+ 8000d82:	2107      	movs	r1, #7
+ 8000d84:	2002      	movs	r0, #2
+ 8000d86:	f7ff fbbf 	bl	8000508 <LCD_Cadena>
+ 8000d8a:	e18f      	b.n	80010ac <seg+0x484>
+		        case 8: LCD_Cadena(2,7,"08"); break;
+ 8000d8c:	4a7a      	ldr	r2, [pc, #488]	; (8000f78 <seg+0x350>)
+ 8000d8e:	2107      	movs	r1, #7
+ 8000d90:	2002      	movs	r0, #2
+ 8000d92:	f7ff fbb9 	bl	8000508 <LCD_Cadena>
+ 8000d96:	e189      	b.n	80010ac <seg+0x484>
+		   	    case 9: LCD_Cadena(2,7,"09"); break;
+ 8000d98:	4a78      	ldr	r2, [pc, #480]	; (8000f7c <seg+0x354>)
+ 8000d9a:	2107      	movs	r1, #7
+ 8000d9c:	2002      	movs	r0, #2
+ 8000d9e:	f7ff fbb3 	bl	8000508 <LCD_Cadena>
+ 8000da2:	e183      	b.n	80010ac <seg+0x484>
+		   	    case 10: LCD_Cadena(2,7,"10"); break;
+ 8000da4:	4a76      	ldr	r2, [pc, #472]	; (8000f80 <seg+0x358>)
+ 8000da6:	2107      	movs	r1, #7
+ 8000da8:	2002      	movs	r0, #2
+ 8000daa:	f7ff fbad 	bl	8000508 <LCD_Cadena>
+ 8000dae:	e17d      	b.n	80010ac <seg+0x484>
+		   	    case 11: LCD_Cadena(2,7,"11"); break;
+ 8000db0:	4a74      	ldr	r2, [pc, #464]	; (8000f84 <seg+0x35c>)
+ 8000db2:	2107      	movs	r1, #7
+ 8000db4:	2002      	movs	r0, #2
+ 8000db6:	f7ff fba7 	bl	8000508 <LCD_Cadena>
+ 8000dba:	e177      	b.n	80010ac <seg+0x484>
+		   	    case 12: LCD_Cadena(2,7,"12"); break;
+ 8000dbc:	4a72      	ldr	r2, [pc, #456]	; (8000f88 <seg+0x360>)
+ 8000dbe:	2107      	movs	r1, #7
+ 8000dc0:	2002      	movs	r0, #2
+ 8000dc2:	f7ff fba1 	bl	8000508 <LCD_Cadena>
+ 8000dc6:	e171      	b.n	80010ac <seg+0x484>
+		        case 13: LCD_Cadena(2,7,"13"); break;
+ 8000dc8:	4a70      	ldr	r2, [pc, #448]	; (8000f8c <seg+0x364>)
+ 8000dca:	2107      	movs	r1, #7
+ 8000dcc:	2002      	movs	r0, #2
+ 8000dce:	f7ff fb9b 	bl	8000508 <LCD_Cadena>
+ 8000dd2:	e16b      	b.n	80010ac <seg+0x484>
+		   	    case 14: LCD_Cadena(2,7,"14"); break;
+ 8000dd4:	4a6e      	ldr	r2, [pc, #440]	; (8000f90 <seg+0x368>)
+ 8000dd6:	2107      	movs	r1, #7
+ 8000dd8:	2002      	movs	r0, #2
+ 8000dda:	f7ff fb95 	bl	8000508 <LCD_Cadena>
+ 8000dde:	e165      	b.n	80010ac <seg+0x484>
+		        case 15: LCD_Cadena(2,7,"15"); break;
+ 8000de0:	4a6c      	ldr	r2, [pc, #432]	; (8000f94 <seg+0x36c>)
+ 8000de2:	2107      	movs	r1, #7
+ 8000de4:	2002      	movs	r0, #2
+ 8000de6:	f7ff fb8f 	bl	8000508 <LCD_Cadena>
+ 8000dea:	e15f      	b.n	80010ac <seg+0x484>
+		        case 16: LCD_Cadena(2,7,"16"); break;
+ 8000dec:	4a6a      	ldr	r2, [pc, #424]	; (8000f98 <seg+0x370>)
+ 8000dee:	2107      	movs	r1, #7
+ 8000df0:	2002      	movs	r0, #2
+ 8000df2:	f7ff fb89 	bl	8000508 <LCD_Cadena>
+ 8000df6:	e159      	b.n	80010ac <seg+0x484>
+		   	    case 17: LCD_Cadena(2,7,"17"); break;
+ 8000df8:	4a68      	ldr	r2, [pc, #416]	; (8000f9c <seg+0x374>)
+ 8000dfa:	2107      	movs	r1, #7
+ 8000dfc:	2002      	movs	r0, #2
+ 8000dfe:	f7ff fb83 	bl	8000508 <LCD_Cadena>
+ 8000e02:	e153      	b.n	80010ac <seg+0x484>
+		        case 18: LCD_Cadena(2,7,"18"); break;
+ 8000e04:	4a66      	ldr	r2, [pc, #408]	; (8000fa0 <seg+0x378>)
+ 8000e06:	2107      	movs	r1, #7
+ 8000e08:	2002      	movs	r0, #2
+ 8000e0a:	f7ff fb7d 	bl	8000508 <LCD_Cadena>
+ 8000e0e:	e14d      	b.n	80010ac <seg+0x484>
+		        case 19: LCD_Cadena(2,7,"19"); break;
+ 8000e10:	4a64      	ldr	r2, [pc, #400]	; (8000fa4 <seg+0x37c>)
+ 8000e12:	2107      	movs	r1, #7
+ 8000e14:	2002      	movs	r0, #2
+ 8000e16:	f7ff fb77 	bl	8000508 <LCD_Cadena>
+ 8000e1a:	e147      	b.n	80010ac <seg+0x484>
+		   	    case 20: LCD_Cadena(2,7,"20"); break;
+ 8000e1c:	4a62      	ldr	r2, [pc, #392]	; (8000fa8 <seg+0x380>)
+ 8000e1e:	2107      	movs	r1, #7
+ 8000e20:	2002      	movs	r0, #2
+ 8000e22:	f7ff fb71 	bl	8000508 <LCD_Cadena>
+ 8000e26:	e141      	b.n	80010ac <seg+0x484>
+		        case 21: LCD_Cadena(2,7,"21"); break;
+ 8000e28:	4a60      	ldr	r2, [pc, #384]	; (8000fac <seg+0x384>)
+ 8000e2a:	2107      	movs	r1, #7
+ 8000e2c:	2002      	movs	r0, #2
+ 8000e2e:	f7ff fb6b 	bl	8000508 <LCD_Cadena>
+ 8000e32:	e13b      	b.n	80010ac <seg+0x484>
+		   	    case 22: LCD_Cadena(2,7,"22"); break;
+ 8000e34:	4a5e      	ldr	r2, [pc, #376]	; (8000fb0 <seg+0x388>)
+ 8000e36:	2107      	movs	r1, #7
+ 8000e38:	2002      	movs	r0, #2
+ 8000e3a:	f7ff fb65 	bl	8000508 <LCD_Cadena>
+ 8000e3e:	e135      	b.n	80010ac <seg+0x484>
+		   	    case 23: LCD_Cadena(2,7,"23"); break;
+ 8000e40:	4a5c      	ldr	r2, [pc, #368]	; (8000fb4 <seg+0x38c>)
+ 8000e42:	2107      	movs	r1, #7
+ 8000e44:	2002      	movs	r0, #2
+ 8000e46:	f7ff fb5f 	bl	8000508 <LCD_Cadena>
+ 8000e4a:	e12f      	b.n	80010ac <seg+0x484>
+		   	    case 24: LCD_Cadena(2,7,"24"); break;
+ 8000e4c:	4a5a      	ldr	r2, [pc, #360]	; (8000fb8 <seg+0x390>)
+ 8000e4e:	2107      	movs	r1, #7
+ 8000e50:	2002      	movs	r0, #2
+ 8000e52:	f7ff fb59 	bl	8000508 <LCD_Cadena>
+ 8000e56:	e129      	b.n	80010ac <seg+0x484>
+		   	    case 25: LCD_Cadena(2,7,"25"); break;
+ 8000e58:	4a58      	ldr	r2, [pc, #352]	; (8000fbc <seg+0x394>)
+ 8000e5a:	2107      	movs	r1, #7
+ 8000e5c:	2002      	movs	r0, #2
+ 8000e5e:	f7ff fb53 	bl	8000508 <LCD_Cadena>
+ 8000e62:	e123      	b.n	80010ac <seg+0x484>
+		   	    case 26: LCD_Cadena(2,7,"26"); break;
+ 8000e64:	4a56      	ldr	r2, [pc, #344]	; (8000fc0 <seg+0x398>)
+ 8000e66:	2107      	movs	r1, #7
+ 8000e68:	2002      	movs	r0, #2
+ 8000e6a:	f7ff fb4d 	bl	8000508 <LCD_Cadena>
+ 8000e6e:	e11d      	b.n	80010ac <seg+0x484>
+		   	    case 27: LCD_Cadena(2,7,"27"); break;
+ 8000e70:	4a54      	ldr	r2, [pc, #336]	; (8000fc4 <seg+0x39c>)
+ 8000e72:	2107      	movs	r1, #7
+ 8000e74:	2002      	movs	r0, #2
+ 8000e76:	f7ff fb47 	bl	8000508 <LCD_Cadena>
+ 8000e7a:	e117      	b.n	80010ac <seg+0x484>
+		   	    case 28: LCD_Cadena(2,7,"28"); break;
+ 8000e7c:	4a52      	ldr	r2, [pc, #328]	; (8000fc8 <seg+0x3a0>)
+ 8000e7e:	2107      	movs	r1, #7
+ 8000e80:	2002      	movs	r0, #2
+ 8000e82:	f7ff fb41 	bl	8000508 <LCD_Cadena>
+ 8000e86:	e111      	b.n	80010ac <seg+0x484>
+		   	    case 29: LCD_Cadena(2,7,"29"); break;
+ 8000e88:	4a50      	ldr	r2, [pc, #320]	; (8000fcc <seg+0x3a4>)
+ 8000e8a:	2107      	movs	r1, #7
+ 8000e8c:	2002      	movs	r0, #2
+ 8000e8e:	f7ff fb3b 	bl	8000508 <LCD_Cadena>
+ 8000e92:	e10b      	b.n	80010ac <seg+0x484>
+		   	    case 30: LCD_Cadena(2,7,"30"); break;
+ 8000e94:	4a4e      	ldr	r2, [pc, #312]	; (8000fd0 <seg+0x3a8>)
+ 8000e96:	2107      	movs	r1, #7
+ 8000e98:	2002      	movs	r0, #2
+ 8000e9a:	f7ff fb35 	bl	8000508 <LCD_Cadena>
+ 8000e9e:	e105      	b.n	80010ac <seg+0x484>
+		   		case 31: LCD_Cadena(2,7,"31"); break;
+ 8000ea0:	4a4c      	ldr	r2, [pc, #304]	; (8000fd4 <seg+0x3ac>)
+ 8000ea2:	2107      	movs	r1, #7
+ 8000ea4:	2002      	movs	r0, #2
+ 8000ea6:	f7ff fb2f 	bl	8000508 <LCD_Cadena>
+ 8000eaa:	e0ff      	b.n	80010ac <seg+0x484>
+		        case 32: LCD_Cadena(2,7,"32"); break;
+ 8000eac:	4a4a      	ldr	r2, [pc, #296]	; (8000fd8 <seg+0x3b0>)
+ 8000eae:	2107      	movs	r1, #7
+ 8000eb0:	2002      	movs	r0, #2
+ 8000eb2:	f7ff fb29 	bl	8000508 <LCD_Cadena>
+ 8000eb6:	e0f9      	b.n	80010ac <seg+0x484>
+		   	    case 33: LCD_Cadena(2,7,"33"); break;
+ 8000eb8:	4a48      	ldr	r2, [pc, #288]	; (8000fdc <seg+0x3b4>)
+ 8000eba:	2107      	movs	r1, #7
+ 8000ebc:	2002      	movs	r0, #2
+ 8000ebe:	f7ff fb23 	bl	8000508 <LCD_Cadena>
+ 8000ec2:	e0f3      	b.n	80010ac <seg+0x484>
+		   	    case 34: LCD_Cadena(2,7,"34"); break;
+ 8000ec4:	4a46      	ldr	r2, [pc, #280]	; (8000fe0 <seg+0x3b8>)
+ 8000ec6:	2107      	movs	r1, #7
+ 8000ec8:	2002      	movs	r0, #2
+ 8000eca:	f7ff fb1d 	bl	8000508 <LCD_Cadena>
+ 8000ece:	e0ed      	b.n	80010ac <seg+0x484>
+		   	    case 35: LCD_Cadena(2,7,"35"); break;
+ 8000ed0:	4a44      	ldr	r2, [pc, #272]	; (8000fe4 <seg+0x3bc>)
+ 8000ed2:	2107      	movs	r1, #7
+ 8000ed4:	2002      	movs	r0, #2
+ 8000ed6:	f7ff fb17 	bl	8000508 <LCD_Cadena>
+ 8000eda:	e0e7      	b.n	80010ac <seg+0x484>
+		   	    case 36: LCD_Cadena(2,7,"36"); break;
+ 8000edc:	4a42      	ldr	r2, [pc, #264]	; (8000fe8 <seg+0x3c0>)
+ 8000ede:	2107      	movs	r1, #7
+ 8000ee0:	2002      	movs	r0, #2
+ 8000ee2:	f7ff fb11 	bl	8000508 <LCD_Cadena>
+ 8000ee6:	e0e1      	b.n	80010ac <seg+0x484>
+		   	    case 37: LCD_Cadena(2,7,"37"); break;
+ 8000ee8:	4a40      	ldr	r2, [pc, #256]	; (8000fec <seg+0x3c4>)
+ 8000eea:	2107      	movs	r1, #7
+ 8000eec:	2002      	movs	r0, #2
+ 8000eee:	f7ff fb0b 	bl	8000508 <LCD_Cadena>
+ 8000ef2:	e0db      	b.n	80010ac <seg+0x484>
+		   	    case 38: LCD_Cadena(2,7,"38"); break;
+ 8000ef4:	4a3e      	ldr	r2, [pc, #248]	; (8000ff0 <seg+0x3c8>)
+ 8000ef6:	2107      	movs	r1, #7
+ 8000ef8:	2002      	movs	r0, #2
+ 8000efa:	f7ff fb05 	bl	8000508 <LCD_Cadena>
+ 8000efe:	e0d5      	b.n	80010ac <seg+0x484>
+		        case 39: LCD_Cadena(2,7,"39"); break;
+ 8000f00:	4a3c      	ldr	r2, [pc, #240]	; (8000ff4 <seg+0x3cc>)
+ 8000f02:	2107      	movs	r1, #7
+ 8000f04:	2002      	movs	r0, #2
+ 8000f06:	f7ff faff 	bl	8000508 <LCD_Cadena>
+ 8000f0a:	e0cf      	b.n	80010ac <seg+0x484>
+		        case 40: LCD_Cadena(2,7,"40"); break;
+ 8000f0c:	4a3a      	ldr	r2, [pc, #232]	; (8000ff8 <seg+0x3d0>)
+ 8000f0e:	2107      	movs	r1, #7
+ 8000f10:	2002      	movs	r0, #2
+ 8000f12:	f7ff faf9 	bl	8000508 <LCD_Cadena>
+ 8000f16:	e0c9      	b.n	80010ac <seg+0x484>
+		        case 41: LCD_Cadena(2,7,"41"); break;
+ 8000f18:	4a38      	ldr	r2, [pc, #224]	; (8000ffc <seg+0x3d4>)
+ 8000f1a:	2107      	movs	r1, #7
+ 8000f1c:	2002      	movs	r0, #2
+ 8000f1e:	f7ff faf3 	bl	8000508 <LCD_Cadena>
+ 8000f22:	e0c3      	b.n	80010ac <seg+0x484>
+		        case 42: LCD_Cadena(2,7,"42"); break;
+ 8000f24:	4a36      	ldr	r2, [pc, #216]	; (8001000 <seg+0x3d8>)
+ 8000f26:	2107      	movs	r1, #7
+ 8000f28:	2002      	movs	r0, #2
+ 8000f2a:	f7ff faed 	bl	8000508 <LCD_Cadena>
+ 8000f2e:	e0bd      	b.n	80010ac <seg+0x484>
+		        case 43: LCD_Cadena(2,7,"43"); break;
+ 8000f30:	4a34      	ldr	r2, [pc, #208]	; (8001004 <seg+0x3dc>)
+ 8000f32:	2107      	movs	r1, #7
+ 8000f34:	2002      	movs	r0, #2
+ 8000f36:	f7ff fae7 	bl	8000508 <LCD_Cadena>
+ 8000f3a:	e0b7      	b.n	80010ac <seg+0x484>
+		        case 45: LCD_Cadena(2,7,"44"); break;
+ 8000f3c:	4a32      	ldr	r2, [pc, #200]	; (8001008 <seg+0x3e0>)
+ 8000f3e:	2107      	movs	r1, #7
+ 8000f40:	2002      	movs	r0, #2
+ 8000f42:	f7ff fae1 	bl	8000508 <LCD_Cadena>
+ 8000f46:	e0b1      	b.n	80010ac <seg+0x484>
+		        case 46: LCD_Cadena(2,7,"45"); break;
+ 8000f48:	4a30      	ldr	r2, [pc, #192]	; (800100c <seg+0x3e4>)
+ 8000f4a:	2107      	movs	r1, #7
+ 8000f4c:	2002      	movs	r0, #2
+ 8000f4e:	f7ff fadb 	bl	8000508 <LCD_Cadena>
+ 8000f52:	e0ab      	b.n	80010ac <seg+0x484>
+ 8000f54:	20000020 	.word	0x20000020
+ 8000f58:	080018f4 	.word	0x080018f4
+ 8000f5c:	080018f8 	.word	0x080018f8
+ 8000f60:	080018fc 	.word	0x080018fc
+ 8000f64:	08001900 	.word	0x08001900
+ 8000f68:	08001904 	.word	0x08001904
+ 8000f6c:	08001908 	.word	0x08001908
+ 8000f70:	0800190c 	.word	0x0800190c
+ 8000f74:	08001910 	.word	0x08001910
+ 8000f78:	08001914 	.word	0x08001914
+ 8000f7c:	08001918 	.word	0x08001918
+ 8000f80:	0800191c 	.word	0x0800191c
+ 8000f84:	08001920 	.word	0x08001920
+ 8000f88:	08001924 	.word	0x08001924
+ 8000f8c:	08001928 	.word	0x08001928
+ 8000f90:	0800192c 	.word	0x0800192c
+ 8000f94:	08001930 	.word	0x08001930
+ 8000f98:	08001934 	.word	0x08001934
+ 8000f9c:	08001938 	.word	0x08001938
+ 8000fa0:	0800193c 	.word	0x0800193c
+ 8000fa4:	08001940 	.word	0x08001940
+ 8000fa8:	08001944 	.word	0x08001944
+ 8000fac:	08001948 	.word	0x08001948
+ 8000fb0:	0800194c 	.word	0x0800194c
+ 8000fb4:	08001950 	.word	0x08001950
+ 8000fb8:	08001954 	.word	0x08001954
+ 8000fbc:	08001958 	.word	0x08001958
+ 8000fc0:	0800195c 	.word	0x0800195c
+ 8000fc4:	08001960 	.word	0x08001960
+ 8000fc8:	08001964 	.word	0x08001964
+ 8000fcc:	08001968 	.word	0x08001968
+ 8000fd0:	0800196c 	.word	0x0800196c
+ 8000fd4:	08001970 	.word	0x08001970
+ 8000fd8:	08001974 	.word	0x08001974
+ 8000fdc:	08001978 	.word	0x08001978
+ 8000fe0:	0800197c 	.word	0x0800197c
+ 8000fe4:	08001980 	.word	0x08001980
+ 8000fe8:	08001984 	.word	0x08001984
+ 8000fec:	08001988 	.word	0x08001988
+ 8000ff0:	0800198c 	.word	0x0800198c
+ 8000ff4:	08001990 	.word	0x08001990
+ 8000ff8:	08001994 	.word	0x08001994
+ 8000ffc:	08001998 	.word	0x08001998
+ 8001000:	0800199c 	.word	0x0800199c
+ 8001004:	080019a0 	.word	0x080019a0
+ 8001008:	080019a4 	.word	0x080019a4
+ 800100c:	080019a8 	.word	0x080019a8
+		        case 47: LCD_Cadena(2,7,"46"); break;
+ 8001010:	4a27      	ldr	r2, [pc, #156]	; (80010b0 <seg+0x488>)
+ 8001012:	2107      	movs	r1, #7
+ 8001014:	2002      	movs	r0, #2
+ 8001016:	f7ff fa77 	bl	8000508 <LCD_Cadena>
+ 800101a:	e047      	b.n	80010ac <seg+0x484>
+		        case 48: LCD_Cadena(2,7,"47"); break;
+ 800101c:	4a25      	ldr	r2, [pc, #148]	; (80010b4 <seg+0x48c>)
+ 800101e:	2107      	movs	r1, #7
+ 8001020:	2002      	movs	r0, #2
+ 8001022:	f7ff fa71 	bl	8000508 <LCD_Cadena>
+ 8001026:	e041      	b.n	80010ac <seg+0x484>
+		        case 49: LCD_Cadena(2,7,"48"); break;
+ 8001028:	4a23      	ldr	r2, [pc, #140]	; (80010b8 <seg+0x490>)
+ 800102a:	2107      	movs	r1, #7
+ 800102c:	2002      	movs	r0, #2
+ 800102e:	f7ff fa6b 	bl	8000508 <LCD_Cadena>
+ 8001032:	e03b      	b.n	80010ac <seg+0x484>
+		        case 50: LCD_Cadena(2,7,"50"); break;
+ 8001034:	4a21      	ldr	r2, [pc, #132]	; (80010bc <seg+0x494>)
+ 8001036:	2107      	movs	r1, #7
+ 8001038:	2002      	movs	r0, #2
+ 800103a:	f7ff fa65 	bl	8000508 <LCD_Cadena>
+ 800103e:	e035      	b.n	80010ac <seg+0x484>
+		        case 51: LCD_Cadena(2,7,"51"); break;
+ 8001040:	4a1f      	ldr	r2, [pc, #124]	; (80010c0 <seg+0x498>)
+ 8001042:	2107      	movs	r1, #7
+ 8001044:	2002      	movs	r0, #2
+ 8001046:	f7ff fa5f 	bl	8000508 <LCD_Cadena>
+ 800104a:	e02f      	b.n	80010ac <seg+0x484>
+		        case 52: LCD_Cadena(2,7,"52"); break;
+ 800104c:	4a1d      	ldr	r2, [pc, #116]	; (80010c4 <seg+0x49c>)
+ 800104e:	2107      	movs	r1, #7
+ 8001050:	2002      	movs	r0, #2
+ 8001052:	f7ff fa59 	bl	8000508 <LCD_Cadena>
+ 8001056:	e029      	b.n	80010ac <seg+0x484>
+		        case 53: LCD_Cadena(2,7,"53"); break;
+ 8001058:	4a1b      	ldr	r2, [pc, #108]	; (80010c8 <seg+0x4a0>)
+ 800105a:	2107      	movs	r1, #7
+ 800105c:	2002      	movs	r0, #2
+ 800105e:	f7ff fa53 	bl	8000508 <LCD_Cadena>
+ 8001062:	e023      	b.n	80010ac <seg+0x484>
+		   	    case 54: LCD_Cadena(2,7,"54"); break;
+ 8001064:	4a19      	ldr	r2, [pc, #100]	; (80010cc <seg+0x4a4>)
+ 8001066:	2107      	movs	r1, #7
+ 8001068:	2002      	movs	r0, #2
+ 800106a:	f7ff fa4d 	bl	8000508 <LCD_Cadena>
+ 800106e:	e01d      	b.n	80010ac <seg+0x484>
+		   	    case 55: LCD_Cadena(2,7,"55"); break;
+ 8001070:	4a17      	ldr	r2, [pc, #92]	; (80010d0 <seg+0x4a8>)
+ 8001072:	2107      	movs	r1, #7
+ 8001074:	2002      	movs	r0, #2
+ 8001076:	f7ff fa47 	bl	8000508 <LCD_Cadena>
+ 800107a:	e017      	b.n	80010ac <seg+0x484>
+	            case 56: LCD_Cadena(2,7,"56"); break;
+ 800107c:	4a15      	ldr	r2, [pc, #84]	; (80010d4 <seg+0x4ac>)
+ 800107e:	2107      	movs	r1, #7
+ 8001080:	2002      	movs	r0, #2
+ 8001082:	f7ff fa41 	bl	8000508 <LCD_Cadena>
+ 8001086:	e011      	b.n	80010ac <seg+0x484>
+		        case 57: LCD_Cadena(2,7,"57"); break;
+ 8001088:	4a13      	ldr	r2, [pc, #76]	; (80010d8 <seg+0x4b0>)
+ 800108a:	2107      	movs	r1, #7
+ 800108c:	2002      	movs	r0, #2
+ 800108e:	f7ff fa3b 	bl	8000508 <LCD_Cadena>
+ 8001092:	e00b      	b.n	80010ac <seg+0x484>
+		        case 58: LCD_Cadena(2,7,"58"); break;
+ 8001094:	4a11      	ldr	r2, [pc, #68]	; (80010dc <seg+0x4b4>)
+ 8001096:	2107      	movs	r1, #7
+ 8001098:	2002      	movs	r0, #2
+ 800109a:	f7ff fa35 	bl	8000508 <LCD_Cadena>
+ 800109e:	e005      	b.n	80010ac <seg+0x484>
+	    	    case 59: LCD_Cadena(2,7,"59"); break;
+ 80010a0:	4a0f      	ldr	r2, [pc, #60]	; (80010e0 <seg+0x4b8>)
+ 80010a2:	2107      	movs	r1, #7
+ 80010a4:	2002      	movs	r0, #2
+ 80010a6:	f7ff fa2f 	bl	8000508 <LCD_Cadena>
+ 80010aa:	bf00      	nop
+		   		        }
+	   }
+ 80010ac:	bf00      	nop
+ 80010ae:	bd80      	pop	{r7, pc}
+ 80010b0:	080019ac 	.word	0x080019ac
+ 80010b4:	080019b0 	.word	0x080019b0
+ 80010b8:	080019b4 	.word	0x080019b4
+ 80010bc:	080019b8 	.word	0x080019b8
+ 80010c0:	080019bc 	.word	0x080019bc
+ 80010c4:	080019c0 	.word	0x080019c0
+ 80010c8:	080019c4 	.word	0x080019c4
+ 80010cc:	080019c8 	.word	0x080019c8
+ 80010d0:	080019cc 	.word	0x080019cc
+ 80010d4:	080019d0 	.word	0x080019d0
+ 80010d8:	080019d4 	.word	0x080019d4
+ 80010dc:	080019d8 	.word	0x080019d8
+ 80010e0:	080019dc 	.word	0x080019dc
+
+080010e4 <min>:
+
+
+
+	   void min(void)
+	   {
+ 80010e4:	b580      	push	{r7, lr}
+ 80010e6:	af00      	add	r7, sp, #0
+		    switch(MM)   //DISPLAY MINUTOS
+ 80010e8:	4bc9      	ldr	r3, [pc, #804]	; (8001410 <min+0x32c>)
+ 80010ea:	681b      	ldr	r3, [r3, #0]
+ 80010ec:	2b3b      	cmp	r3, #59	; 0x3b
+ 80010ee:	f200 823b 	bhi.w	8001568 <min+0x484>
+ 80010f2:	a201      	add	r2, pc, #4	; (adr r2, 80010f8 <min+0x14>)
+ 80010f4:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 80010f8:	080011e9 	.word	0x080011e9
+ 80010fc:	080011f5 	.word	0x080011f5
+ 8001100:	08001201 	.word	0x08001201
+ 8001104:	0800120d 	.word	0x0800120d
+ 8001108:	08001219 	.word	0x08001219
+ 800110c:	08001225 	.word	0x08001225
+ 8001110:	08001231 	.word	0x08001231
+ 8001114:	0800123d 	.word	0x0800123d
+ 8001118:	08001249 	.word	0x08001249
+ 800111c:	08001255 	.word	0x08001255
+ 8001120:	08001261 	.word	0x08001261
+ 8001124:	0800126d 	.word	0x0800126d
+ 8001128:	08001279 	.word	0x08001279
+ 800112c:	08001285 	.word	0x08001285
+ 8001130:	08001291 	.word	0x08001291
+ 8001134:	0800129d 	.word	0x0800129d
+ 8001138:	080012a9 	.word	0x080012a9
+ 800113c:	080012b5 	.word	0x080012b5
+ 8001140:	080012c1 	.word	0x080012c1
+ 8001144:	080012cd 	.word	0x080012cd
+ 8001148:	080012d9 	.word	0x080012d9
+ 800114c:	080012e5 	.word	0x080012e5
+ 8001150:	080012f1 	.word	0x080012f1
+ 8001154:	080012fd 	.word	0x080012fd
+ 8001158:	08001309 	.word	0x08001309
+ 800115c:	08001315 	.word	0x08001315
+ 8001160:	08001321 	.word	0x08001321
+ 8001164:	0800132d 	.word	0x0800132d
+ 8001168:	08001339 	.word	0x08001339
+ 800116c:	08001345 	.word	0x08001345
+ 8001170:	08001351 	.word	0x08001351
+ 8001174:	0800135d 	.word	0x0800135d
+ 8001178:	08001369 	.word	0x08001369
+ 800117c:	08001375 	.word	0x08001375
+ 8001180:	08001381 	.word	0x08001381
+ 8001184:	0800138d 	.word	0x0800138d
+ 8001188:	08001399 	.word	0x08001399
+ 800118c:	080013a5 	.word	0x080013a5
+ 8001190:	080013b1 	.word	0x080013b1
+ 8001194:	080013bd 	.word	0x080013bd
+ 8001198:	080013c9 	.word	0x080013c9
+ 800119c:	080013d5 	.word	0x080013d5
+ 80011a0:	080013e1 	.word	0x080013e1
+ 80011a4:	080013ed 	.word	0x080013ed
+ 80011a8:	08001569 	.word	0x08001569
+ 80011ac:	080013f9 	.word	0x080013f9
+ 80011b0:	08001405 	.word	0x08001405
+ 80011b4:	080014cd 	.word	0x080014cd
+ 80011b8:	080014d9 	.word	0x080014d9
+ 80011bc:	080014e5 	.word	0x080014e5
+ 80011c0:	080014f1 	.word	0x080014f1
+ 80011c4:	080014fd 	.word	0x080014fd
+ 80011c8:	08001509 	.word	0x08001509
+ 80011cc:	08001515 	.word	0x08001515
+ 80011d0:	08001521 	.word	0x08001521
+ 80011d4:	0800152d 	.word	0x0800152d
+ 80011d8:	08001539 	.word	0x08001539
+ 80011dc:	08001545 	.word	0x08001545
+ 80011e0:	08001551 	.word	0x08001551
+ 80011e4:	0800155d 	.word	0x0800155d
+				           {
+				        	    case 0: LCD_Cadena(2,4,"00"); break;
+ 80011e8:	4a8a      	ldr	r2, [pc, #552]	; (8001414 <min+0x330>)
+ 80011ea:	2104      	movs	r1, #4
+ 80011ec:	2002      	movs	r0, #2
+ 80011ee:	f7ff f98b 	bl	8000508 <LCD_Cadena>
+ 80011f2:	e1b9      	b.n	8001568 <min+0x484>
+				        	    case 1: LCD_Cadena(2,4,"01"); break;
+ 80011f4:	4a88      	ldr	r2, [pc, #544]	; (8001418 <min+0x334>)
+ 80011f6:	2104      	movs	r1, #4
+ 80011f8:	2002      	movs	r0, #2
+ 80011fa:	f7ff f985 	bl	8000508 <LCD_Cadena>
+ 80011fe:	e1b3      	b.n	8001568 <min+0x484>
+				        	    case 2: LCD_Cadena(2,4,"02"); break;
+ 8001200:	4a86      	ldr	r2, [pc, #536]	; (800141c <min+0x338>)
+ 8001202:	2104      	movs	r1, #4
+ 8001204:	2002      	movs	r0, #2
+ 8001206:	f7ff f97f 	bl	8000508 <LCD_Cadena>
+ 800120a:	e1ad      	b.n	8001568 <min+0x484>
+				                case 3: LCD_Cadena(2,4,"03"); break;
+ 800120c:	4a84      	ldr	r2, [pc, #528]	; (8001420 <min+0x33c>)
+ 800120e:	2104      	movs	r1, #4
+ 8001210:	2002      	movs	r0, #2
+ 8001212:	f7ff f979 	bl	8000508 <LCD_Cadena>
+ 8001216:	e1a7      	b.n	8001568 <min+0x484>
+				        	    case 4: LCD_Cadena(2,4,"04"); break;
+ 8001218:	4a82      	ldr	r2, [pc, #520]	; (8001424 <min+0x340>)
+ 800121a:	2104      	movs	r1, #4
+ 800121c:	2002      	movs	r0, #2
+ 800121e:	f7ff f973 	bl	8000508 <LCD_Cadena>
+ 8001222:	e1a1      	b.n	8001568 <min+0x484>
+				        	    case 5: LCD_Cadena(2,4,"05"); break;
+ 8001224:	4a80      	ldr	r2, [pc, #512]	; (8001428 <min+0x344>)
+ 8001226:	2104      	movs	r1, #4
+ 8001228:	2002      	movs	r0, #2
+ 800122a:	f7ff f96d 	bl	8000508 <LCD_Cadena>
+ 800122e:	e19b      	b.n	8001568 <min+0x484>
+				        	    case 6: LCD_Cadena(2,4,"06"); break;
+ 8001230:	4a7e      	ldr	r2, [pc, #504]	; (800142c <min+0x348>)
+ 8001232:	2104      	movs	r1, #4
+ 8001234:	2002      	movs	r0, #2
+ 8001236:	f7ff f967 	bl	8000508 <LCD_Cadena>
+ 800123a:	e195      	b.n	8001568 <min+0x484>
+				        	    case 7: LCD_Cadena(2,4,"07"); break;
+ 800123c:	4a7c      	ldr	r2, [pc, #496]	; (8001430 <min+0x34c>)
+ 800123e:	2104      	movs	r1, #4
+ 8001240:	2002      	movs	r0, #2
+ 8001242:	f7ff f961 	bl	8000508 <LCD_Cadena>
+ 8001246:	e18f      	b.n	8001568 <min+0x484>
+				                case 8: LCD_Cadena(2,4,"08"); break;
+ 8001248:	4a7a      	ldr	r2, [pc, #488]	; (8001434 <min+0x350>)
+ 800124a:	2104      	movs	r1, #4
+ 800124c:	2002      	movs	r0, #2
+ 800124e:	f7ff f95b 	bl	8000508 <LCD_Cadena>
+ 8001252:	e189      	b.n	8001568 <min+0x484>
+				        	    case 9: LCD_Cadena(2,4,"09"); break;
+ 8001254:	4a78      	ldr	r2, [pc, #480]	; (8001438 <min+0x354>)
+ 8001256:	2104      	movs	r1, #4
+ 8001258:	2002      	movs	r0, #2
+ 800125a:	f7ff f955 	bl	8000508 <LCD_Cadena>
+ 800125e:	e183      	b.n	8001568 <min+0x484>
+				        	    case 10: LCD_Cadena(2,4,"10"); break;
+ 8001260:	4a76      	ldr	r2, [pc, #472]	; (800143c <min+0x358>)
+ 8001262:	2104      	movs	r1, #4
+ 8001264:	2002      	movs	r0, #2
+ 8001266:	f7ff f94f 	bl	8000508 <LCD_Cadena>
+ 800126a:	e17d      	b.n	8001568 <min+0x484>
+				        	    case 11: LCD_Cadena(2,4,"11"); break;
+ 800126c:	4a74      	ldr	r2, [pc, #464]	; (8001440 <min+0x35c>)
+ 800126e:	2104      	movs	r1, #4
+ 8001270:	2002      	movs	r0, #2
+ 8001272:	f7ff f949 	bl	8000508 <LCD_Cadena>
+ 8001276:	e177      	b.n	8001568 <min+0x484>
+				        	    case 12: LCD_Cadena(2,4,"12"); break;
+ 8001278:	4a72      	ldr	r2, [pc, #456]	; (8001444 <min+0x360>)
+ 800127a:	2104      	movs	r1, #4
+ 800127c:	2002      	movs	r0, #2
+ 800127e:	f7ff f943 	bl	8000508 <LCD_Cadena>
+ 8001282:	e171      	b.n	8001568 <min+0x484>
+				                case 13: LCD_Cadena(2,4,"13"); break;
+ 8001284:	4a70      	ldr	r2, [pc, #448]	; (8001448 <min+0x364>)
+ 8001286:	2104      	movs	r1, #4
+ 8001288:	2002      	movs	r0, #2
+ 800128a:	f7ff f93d 	bl	8000508 <LCD_Cadena>
+ 800128e:	e16b      	b.n	8001568 <min+0x484>
+				        	    case 14: LCD_Cadena(2,4,"14"); break;
+ 8001290:	4a6e      	ldr	r2, [pc, #440]	; (800144c <min+0x368>)
+ 8001292:	2104      	movs	r1, #4
+ 8001294:	2002      	movs	r0, #2
+ 8001296:	f7ff f937 	bl	8000508 <LCD_Cadena>
+ 800129a:	e165      	b.n	8001568 <min+0x484>
+				                case 15: LCD_Cadena(2,4,"15"); break;
+ 800129c:	4a6c      	ldr	r2, [pc, #432]	; (8001450 <min+0x36c>)
+ 800129e:	2104      	movs	r1, #4
+ 80012a0:	2002      	movs	r0, #2
+ 80012a2:	f7ff f931 	bl	8000508 <LCD_Cadena>
+ 80012a6:	e15f      	b.n	8001568 <min+0x484>
+				                case 16: LCD_Cadena(2,4,"16"); break;
+ 80012a8:	4a6a      	ldr	r2, [pc, #424]	; (8001454 <min+0x370>)
+ 80012aa:	2104      	movs	r1, #4
+ 80012ac:	2002      	movs	r0, #2
+ 80012ae:	f7ff f92b 	bl	8000508 <LCD_Cadena>
+ 80012b2:	e159      	b.n	8001568 <min+0x484>
+				        	    case 17: LCD_Cadena(2,4,"17"); break;
+ 80012b4:	4a68      	ldr	r2, [pc, #416]	; (8001458 <min+0x374>)
+ 80012b6:	2104      	movs	r1, #4
+ 80012b8:	2002      	movs	r0, #2
+ 80012ba:	f7ff f925 	bl	8000508 <LCD_Cadena>
+ 80012be:	e153      	b.n	8001568 <min+0x484>
+				                case 18: LCD_Cadena(2,4,"18"); break;
+ 80012c0:	4a66      	ldr	r2, [pc, #408]	; (800145c <min+0x378>)
+ 80012c2:	2104      	movs	r1, #4
+ 80012c4:	2002      	movs	r0, #2
+ 80012c6:	f7ff f91f 	bl	8000508 <LCD_Cadena>
+ 80012ca:	e14d      	b.n	8001568 <min+0x484>
+				                case 19: LCD_Cadena(2,4,"19"); break;
+ 80012cc:	4a64      	ldr	r2, [pc, #400]	; (8001460 <min+0x37c>)
+ 80012ce:	2104      	movs	r1, #4
+ 80012d0:	2002      	movs	r0, #2
+ 80012d2:	f7ff f919 	bl	8000508 <LCD_Cadena>
+ 80012d6:	e147      	b.n	8001568 <min+0x484>
+				        	    case 20: LCD_Cadena(2,4,"20"); break;
+ 80012d8:	4a62      	ldr	r2, [pc, #392]	; (8001464 <min+0x380>)
+ 80012da:	2104      	movs	r1, #4
+ 80012dc:	2002      	movs	r0, #2
+ 80012de:	f7ff f913 	bl	8000508 <LCD_Cadena>
+ 80012e2:	e141      	b.n	8001568 <min+0x484>
+				                case 21: LCD_Cadena(2,4,"21"); break;
+ 80012e4:	4a60      	ldr	r2, [pc, #384]	; (8001468 <min+0x384>)
+ 80012e6:	2104      	movs	r1, #4
+ 80012e8:	2002      	movs	r0, #2
+ 80012ea:	f7ff f90d 	bl	8000508 <LCD_Cadena>
+ 80012ee:	e13b      	b.n	8001568 <min+0x484>
+				        	    case 22: LCD_Cadena(2,4,"22"); break;
+ 80012f0:	4a5e      	ldr	r2, [pc, #376]	; (800146c <min+0x388>)
+ 80012f2:	2104      	movs	r1, #4
+ 80012f4:	2002      	movs	r0, #2
+ 80012f6:	f7ff f907 	bl	8000508 <LCD_Cadena>
+ 80012fa:	e135      	b.n	8001568 <min+0x484>
+				        	    case 23: LCD_Cadena(2,4,"23"); break;
+ 80012fc:	4a5c      	ldr	r2, [pc, #368]	; (8001470 <min+0x38c>)
+ 80012fe:	2104      	movs	r1, #4
+ 8001300:	2002      	movs	r0, #2
+ 8001302:	f7ff f901 	bl	8000508 <LCD_Cadena>
+ 8001306:	e12f      	b.n	8001568 <min+0x484>
+				        	    case 24: LCD_Cadena(2,4,"24"); break;
+ 8001308:	4a5a      	ldr	r2, [pc, #360]	; (8001474 <min+0x390>)
+ 800130a:	2104      	movs	r1, #4
+ 800130c:	2002      	movs	r0, #2
+ 800130e:	f7ff f8fb 	bl	8000508 <LCD_Cadena>
+ 8001312:	e129      	b.n	8001568 <min+0x484>
+				        	    case 25: LCD_Cadena(2,4,"25"); break;
+ 8001314:	4a58      	ldr	r2, [pc, #352]	; (8001478 <min+0x394>)
+ 8001316:	2104      	movs	r1, #4
+ 8001318:	2002      	movs	r0, #2
+ 800131a:	f7ff f8f5 	bl	8000508 <LCD_Cadena>
+ 800131e:	e123      	b.n	8001568 <min+0x484>
+				        	    case 26: LCD_Cadena(2,4,"26"); break;
+ 8001320:	4a56      	ldr	r2, [pc, #344]	; (800147c <min+0x398>)
+ 8001322:	2104      	movs	r1, #4
+ 8001324:	2002      	movs	r0, #2
+ 8001326:	f7ff f8ef 	bl	8000508 <LCD_Cadena>
+ 800132a:	e11d      	b.n	8001568 <min+0x484>
+				        	    case 27: LCD_Cadena(2,4,"27"); break;
+ 800132c:	4a54      	ldr	r2, [pc, #336]	; (8001480 <min+0x39c>)
+ 800132e:	2104      	movs	r1, #4
+ 8001330:	2002      	movs	r0, #2
+ 8001332:	f7ff f8e9 	bl	8000508 <LCD_Cadena>
+ 8001336:	e117      	b.n	8001568 <min+0x484>
+				        	    case 28: LCD_Cadena(2,4,"28"); break;
+ 8001338:	4a52      	ldr	r2, [pc, #328]	; (8001484 <min+0x3a0>)
+ 800133a:	2104      	movs	r1, #4
+ 800133c:	2002      	movs	r0, #2
+ 800133e:	f7ff f8e3 	bl	8000508 <LCD_Cadena>
+ 8001342:	e111      	b.n	8001568 <min+0x484>
+				        	    case 29: LCD_Cadena(2,4,"29"); break;
+ 8001344:	4a50      	ldr	r2, [pc, #320]	; (8001488 <min+0x3a4>)
+ 8001346:	2104      	movs	r1, #4
+ 8001348:	2002      	movs	r0, #2
+ 800134a:	f7ff f8dd 	bl	8000508 <LCD_Cadena>
+ 800134e:	e10b      	b.n	8001568 <min+0x484>
+				        	    case 30: LCD_Cadena(2,4,"30"); break;
+ 8001350:	4a4e      	ldr	r2, [pc, #312]	; (800148c <min+0x3a8>)
+ 8001352:	2104      	movs	r1, #4
+ 8001354:	2002      	movs	r0, #2
+ 8001356:	f7ff f8d7 	bl	8000508 <LCD_Cadena>
+ 800135a:	e105      	b.n	8001568 <min+0x484>
+				        		case 31: LCD_Cadena(2,4,"31"); break;
+ 800135c:	4a4c      	ldr	r2, [pc, #304]	; (8001490 <min+0x3ac>)
+ 800135e:	2104      	movs	r1, #4
+ 8001360:	2002      	movs	r0, #2
+ 8001362:	f7ff f8d1 	bl	8000508 <LCD_Cadena>
+ 8001366:	e0ff      	b.n	8001568 <min+0x484>
+				                case 32: LCD_Cadena(2,4,"32"); break;
+ 8001368:	4a4a      	ldr	r2, [pc, #296]	; (8001494 <min+0x3b0>)
+ 800136a:	2104      	movs	r1, #4
+ 800136c:	2002      	movs	r0, #2
+ 800136e:	f7ff f8cb 	bl	8000508 <LCD_Cadena>
+ 8001372:	e0f9      	b.n	8001568 <min+0x484>
+				        	    case 33: LCD_Cadena(2,4,"33"); break;
+ 8001374:	4a48      	ldr	r2, [pc, #288]	; (8001498 <min+0x3b4>)
+ 8001376:	2104      	movs	r1, #4
+ 8001378:	2002      	movs	r0, #2
+ 800137a:	f7ff f8c5 	bl	8000508 <LCD_Cadena>
+ 800137e:	e0f3      	b.n	8001568 <min+0x484>
+				        	    case 34: LCD_Cadena(2,4,"34"); break;
+ 8001380:	4a46      	ldr	r2, [pc, #280]	; (800149c <min+0x3b8>)
+ 8001382:	2104      	movs	r1, #4
+ 8001384:	2002      	movs	r0, #2
+ 8001386:	f7ff f8bf 	bl	8000508 <LCD_Cadena>
+ 800138a:	e0ed      	b.n	8001568 <min+0x484>
+				        	    case 35: LCD_Cadena(2,4,"35"); break;
+ 800138c:	4a44      	ldr	r2, [pc, #272]	; (80014a0 <min+0x3bc>)
+ 800138e:	2104      	movs	r1, #4
+ 8001390:	2002      	movs	r0, #2
+ 8001392:	f7ff f8b9 	bl	8000508 <LCD_Cadena>
+ 8001396:	e0e7      	b.n	8001568 <min+0x484>
+				        	    case 36: LCD_Cadena(2,4,"36"); break;
+ 8001398:	4a42      	ldr	r2, [pc, #264]	; (80014a4 <min+0x3c0>)
+ 800139a:	2104      	movs	r1, #4
+ 800139c:	2002      	movs	r0, #2
+ 800139e:	f7ff f8b3 	bl	8000508 <LCD_Cadena>
+ 80013a2:	e0e1      	b.n	8001568 <min+0x484>
+				        	    case 37: LCD_Cadena(2,4,"37"); break;
+ 80013a4:	4a40      	ldr	r2, [pc, #256]	; (80014a8 <min+0x3c4>)
+ 80013a6:	2104      	movs	r1, #4
+ 80013a8:	2002      	movs	r0, #2
+ 80013aa:	f7ff f8ad 	bl	8000508 <LCD_Cadena>
+ 80013ae:	e0db      	b.n	8001568 <min+0x484>
+				        	    case 38: LCD_Cadena(2,4,"38"); break;
+ 80013b0:	4a3e      	ldr	r2, [pc, #248]	; (80014ac <min+0x3c8>)
+ 80013b2:	2104      	movs	r1, #4
+ 80013b4:	2002      	movs	r0, #2
+ 80013b6:	f7ff f8a7 	bl	8000508 <LCD_Cadena>
+ 80013ba:	e0d5      	b.n	8001568 <min+0x484>
+				                case 39: LCD_Cadena(2,4,"39"); break;
+ 80013bc:	4a3c      	ldr	r2, [pc, #240]	; (80014b0 <min+0x3cc>)
+ 80013be:	2104      	movs	r1, #4
+ 80013c0:	2002      	movs	r0, #2
+ 80013c2:	f7ff f8a1 	bl	8000508 <LCD_Cadena>
+ 80013c6:	e0cf      	b.n	8001568 <min+0x484>
+				                case 40: LCD_Cadena(2,4,"40"); break;
+ 80013c8:	4a3a      	ldr	r2, [pc, #232]	; (80014b4 <min+0x3d0>)
+ 80013ca:	2104      	movs	r1, #4
+ 80013cc:	2002      	movs	r0, #2
+ 80013ce:	f7ff f89b 	bl	8000508 <LCD_Cadena>
+ 80013d2:	e0c9      	b.n	8001568 <min+0x484>
+				                case 41: LCD_Cadena(2,4,"41"); break;
+ 80013d4:	4a38      	ldr	r2, [pc, #224]	; (80014b8 <min+0x3d4>)
+ 80013d6:	2104      	movs	r1, #4
+ 80013d8:	2002      	movs	r0, #2
+ 80013da:	f7ff f895 	bl	8000508 <LCD_Cadena>
+ 80013de:	e0c3      	b.n	8001568 <min+0x484>
+				                case 42: LCD_Cadena(2,4,"42"); break;
+ 80013e0:	4a36      	ldr	r2, [pc, #216]	; (80014bc <min+0x3d8>)
+ 80013e2:	2104      	movs	r1, #4
+ 80013e4:	2002      	movs	r0, #2
+ 80013e6:	f7ff f88f 	bl	8000508 <LCD_Cadena>
+ 80013ea:	e0bd      	b.n	8001568 <min+0x484>
+				                case 43: LCD_Cadena(2,4,"43"); break;
+ 80013ec:	4a34      	ldr	r2, [pc, #208]	; (80014c0 <min+0x3dc>)
+ 80013ee:	2104      	movs	r1, #4
+ 80013f0:	2002      	movs	r0, #2
+ 80013f2:	f7ff f889 	bl	8000508 <LCD_Cadena>
+ 80013f6:	e0b7      	b.n	8001568 <min+0x484>
+				                case 45: LCD_Cadena(2,4,"44"); break;
+ 80013f8:	4a32      	ldr	r2, [pc, #200]	; (80014c4 <min+0x3e0>)
+ 80013fa:	2104      	movs	r1, #4
+ 80013fc:	2002      	movs	r0, #2
+ 80013fe:	f7ff f883 	bl	8000508 <LCD_Cadena>
+ 8001402:	e0b1      	b.n	8001568 <min+0x484>
+				                case 46: LCD_Cadena(2,4,"45"); break;
+ 8001404:	4a30      	ldr	r2, [pc, #192]	; (80014c8 <min+0x3e4>)
+ 8001406:	2104      	movs	r1, #4
+ 8001408:	2002      	movs	r0, #2
+ 800140a:	f7ff f87d 	bl	8000508 <LCD_Cadena>
+ 800140e:	e0ab      	b.n	8001568 <min+0x484>
+ 8001410:	20000024 	.word	0x20000024
+ 8001414:	080018f4 	.word	0x080018f4
+ 8001418:	080018f8 	.word	0x080018f8
+ 800141c:	080018fc 	.word	0x080018fc
+ 8001420:	08001900 	.word	0x08001900
+ 8001424:	08001904 	.word	0x08001904
+ 8001428:	08001908 	.word	0x08001908
+ 800142c:	0800190c 	.word	0x0800190c
+ 8001430:	08001910 	.word	0x08001910
+ 8001434:	08001914 	.word	0x08001914
+ 8001438:	08001918 	.word	0x08001918
+ 800143c:	0800191c 	.word	0x0800191c
+ 8001440:	08001920 	.word	0x08001920
+ 8001444:	08001924 	.word	0x08001924
+ 8001448:	08001928 	.word	0x08001928
+ 800144c:	0800192c 	.word	0x0800192c
+ 8001450:	08001930 	.word	0x08001930
+ 8001454:	08001934 	.word	0x08001934
+ 8001458:	08001938 	.word	0x08001938
+ 800145c:	0800193c 	.word	0x0800193c
+ 8001460:	08001940 	.word	0x08001940
+ 8001464:	08001944 	.word	0x08001944
+ 8001468:	08001948 	.word	0x08001948
+ 800146c:	0800194c 	.word	0x0800194c
+ 8001470:	08001950 	.word	0x08001950
+ 8001474:	08001954 	.word	0x08001954
+ 8001478:	08001958 	.word	0x08001958
+ 800147c:	0800195c 	.word	0x0800195c
+ 8001480:	08001960 	.word	0x08001960
+ 8001484:	08001964 	.word	0x08001964
+ 8001488:	08001968 	.word	0x08001968
+ 800148c:	0800196c 	.word	0x0800196c
+ 8001490:	08001970 	.word	0x08001970
+ 8001494:	08001974 	.word	0x08001974
+ 8001498:	08001978 	.word	0x08001978
+ 800149c:	0800197c 	.word	0x0800197c
+ 80014a0:	08001980 	.word	0x08001980
+ 80014a4:	08001984 	.word	0x08001984
+ 80014a8:	08001988 	.word	0x08001988
+ 80014ac:	0800198c 	.word	0x0800198c
+ 80014b0:	08001990 	.word	0x08001990
+ 80014b4:	08001994 	.word	0x08001994
+ 80014b8:	08001998 	.word	0x08001998
+ 80014bc:	0800199c 	.word	0x0800199c
+ 80014c0:	080019a0 	.word	0x080019a0
+ 80014c4:	080019a4 	.word	0x080019a4
+ 80014c8:	080019a8 	.word	0x080019a8
+				                case 47: LCD_Cadena(2,4,"46"); break;
+ 80014cc:	4a27      	ldr	r2, [pc, #156]	; (800156c <min+0x488>)
+ 80014ce:	2104      	movs	r1, #4
+ 80014d0:	2002      	movs	r0, #2
+ 80014d2:	f7ff f819 	bl	8000508 <LCD_Cadena>
+ 80014d6:	e047      	b.n	8001568 <min+0x484>
+				                case 48: LCD_Cadena(2,4,"47"); break;
+ 80014d8:	4a25      	ldr	r2, [pc, #148]	; (8001570 <min+0x48c>)
+ 80014da:	2104      	movs	r1, #4
+ 80014dc:	2002      	movs	r0, #2
+ 80014de:	f7ff f813 	bl	8000508 <LCD_Cadena>
+ 80014e2:	e041      	b.n	8001568 <min+0x484>
+				                case 49: LCD_Cadena(2,4,"48"); break;
+ 80014e4:	4a23      	ldr	r2, [pc, #140]	; (8001574 <min+0x490>)
+ 80014e6:	2104      	movs	r1, #4
+ 80014e8:	2002      	movs	r0, #2
+ 80014ea:	f7ff f80d 	bl	8000508 <LCD_Cadena>
+ 80014ee:	e03b      	b.n	8001568 <min+0x484>
+				                case 50: LCD_Cadena(2,4,"50"); break;
+ 80014f0:	4a21      	ldr	r2, [pc, #132]	; (8001578 <min+0x494>)
+ 80014f2:	2104      	movs	r1, #4
+ 80014f4:	2002      	movs	r0, #2
+ 80014f6:	f7ff f807 	bl	8000508 <LCD_Cadena>
+ 80014fa:	e035      	b.n	8001568 <min+0x484>
+				                case 51: LCD_Cadena(2,4,"51"); break;
+ 80014fc:	4a1f      	ldr	r2, [pc, #124]	; (800157c <min+0x498>)
+ 80014fe:	2104      	movs	r1, #4
+ 8001500:	2002      	movs	r0, #2
+ 8001502:	f7ff f801 	bl	8000508 <LCD_Cadena>
+ 8001506:	e02f      	b.n	8001568 <min+0x484>
+				                case 52: LCD_Cadena(2,4,"52"); break;
+ 8001508:	4a1d      	ldr	r2, [pc, #116]	; (8001580 <min+0x49c>)
+ 800150a:	2104      	movs	r1, #4
+ 800150c:	2002      	movs	r0, #2
+ 800150e:	f7fe fffb 	bl	8000508 <LCD_Cadena>
+ 8001512:	e029      	b.n	8001568 <min+0x484>
+				                case 53: LCD_Cadena(2,4,"53"); break;
+ 8001514:	4a1b      	ldr	r2, [pc, #108]	; (8001584 <min+0x4a0>)
+ 8001516:	2104      	movs	r1, #4
+ 8001518:	2002      	movs	r0, #2
+ 800151a:	f7fe fff5 	bl	8000508 <LCD_Cadena>
+ 800151e:	e023      	b.n	8001568 <min+0x484>
+				        		case 54: LCD_Cadena(2,4,"54"); break;
+ 8001520:	4a19      	ldr	r2, [pc, #100]	; (8001588 <min+0x4a4>)
+ 8001522:	2104      	movs	r1, #4
+ 8001524:	2002      	movs	r0, #2
+ 8001526:	f7fe ffef 	bl	8000508 <LCD_Cadena>
+ 800152a:	e01d      	b.n	8001568 <min+0x484>
+				        	    case 55: LCD_Cadena(2,4,"55"); break;
+ 800152c:	4a17      	ldr	r2, [pc, #92]	; (800158c <min+0x4a8>)
+ 800152e:	2104      	movs	r1, #4
+ 8001530:	2002      	movs	r0, #2
+ 8001532:	f7fe ffe9 	bl	8000508 <LCD_Cadena>
+ 8001536:	e017      	b.n	8001568 <min+0x484>
+				        	    case 56: LCD_Cadena(2,4,"56"); break;
+ 8001538:	4a15      	ldr	r2, [pc, #84]	; (8001590 <min+0x4ac>)
+ 800153a:	2104      	movs	r1, #4
+ 800153c:	2002      	movs	r0, #2
+ 800153e:	f7fe ffe3 	bl	8000508 <LCD_Cadena>
+ 8001542:	e011      	b.n	8001568 <min+0x484>
+				                case 57: LCD_Cadena(2,4,"57"); break;
+ 8001544:	4a13      	ldr	r2, [pc, #76]	; (8001594 <min+0x4b0>)
+ 8001546:	2104      	movs	r1, #4
+ 8001548:	2002      	movs	r0, #2
+ 800154a:	f7fe ffdd 	bl	8000508 <LCD_Cadena>
+ 800154e:	e00b      	b.n	8001568 <min+0x484>
+				                case 58: LCD_Cadena(2,4,"58"); break;
+ 8001550:	4a11      	ldr	r2, [pc, #68]	; (8001598 <min+0x4b4>)
+ 8001552:	2104      	movs	r1, #4
+ 8001554:	2002      	movs	r0, #2
+ 8001556:	f7fe ffd7 	bl	8000508 <LCD_Cadena>
+ 800155a:	e005      	b.n	8001568 <min+0x484>
+				        	    case 59: LCD_Cadena(2,4,"59"); break;
+ 800155c:	4a0f      	ldr	r2, [pc, #60]	; (800159c <min+0x4b8>)
+ 800155e:	2104      	movs	r1, #4
+ 8001560:	2002      	movs	r0, #2
+ 8001562:	f7fe ffd1 	bl	8000508 <LCD_Cadena>
+ 8001566:	bf00      	nop
+
+
+	   }
+	   }
+ 8001568:	bf00      	nop
+ 800156a:	bd80      	pop	{r7, pc}
+ 800156c:	080019ac 	.word	0x080019ac
+ 8001570:	080019b0 	.word	0x080019b0
+ 8001574:	080019b4 	.word	0x080019b4
+ 8001578:	080019b8 	.word	0x080019b8
+ 800157c:	080019bc 	.word	0x080019bc
+ 8001580:	080019c0 	.word	0x080019c0
+ 8001584:	080019c4 	.word	0x080019c4
+ 8001588:	080019c8 	.word	0x080019c8
+ 800158c:	080019cc 	.word	0x080019cc
+ 8001590:	080019d0 	.word	0x080019d0
+ 8001594:	080019d4 	.word	0x080019d4
+ 8001598:	080019d8 	.word	0x080019d8
+ 800159c:	080019dc 	.word	0x080019dc
+
+080015a0 <hhrs>:
+
+
+
+	   void hhrs(void)
+	   {
+ 80015a0:	b580      	push	{r7, lr}
+ 80015a2:	af00      	add	r7, sp, #0
+
+		   switch(HH)//DISPLAY HORAS
+ 80015a4:	4b64      	ldr	r3, [pc, #400]	; (8001738 <hhrs+0x198>)
+ 80015a6:	681b      	ldr	r3, [r3, #0]
+ 80015a8:	2b17      	cmp	r3, #23
+ 80015aa:	f200 80c3 	bhi.w	8001734 <hhrs+0x194>
+ 80015ae:	a201      	add	r2, pc, #4	; (adr r2, 80015b4 <hhrs+0x14>)
+ 80015b0:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 80015b4:	08001615 	.word	0x08001615
+ 80015b8:	08001621 	.word	0x08001621
+ 80015bc:	0800162d 	.word	0x0800162d
+ 80015c0:	08001639 	.word	0x08001639
+ 80015c4:	08001645 	.word	0x08001645
+ 80015c8:	08001651 	.word	0x08001651
+ 80015cc:	0800165d 	.word	0x0800165d
+ 80015d0:	08001669 	.word	0x08001669
+ 80015d4:	08001675 	.word	0x08001675
+ 80015d8:	08001681 	.word	0x08001681
+ 80015dc:	0800168d 	.word	0x0800168d
+ 80015e0:	08001699 	.word	0x08001699
+ 80015e4:	080016a5 	.word	0x080016a5
+ 80015e8:	080016b1 	.word	0x080016b1
+ 80015ec:	080016bd 	.word	0x080016bd
+ 80015f0:	080016c9 	.word	0x080016c9
+ 80015f4:	080016d5 	.word	0x080016d5
+ 80015f8:	080016e1 	.word	0x080016e1
+ 80015fc:	080016ed 	.word	0x080016ed
+ 8001600:	080016f9 	.word	0x080016f9
+ 8001604:	08001705 	.word	0x08001705
+ 8001608:	08001711 	.word	0x08001711
+ 800160c:	0800171d 	.word	0x0800171d
+ 8001610:	08001729 	.word	0x08001729
+				        		        {
+
+				        	    case 0: LCD_Cadena(2,1,"00"); break;
+ 8001614:	4a49      	ldr	r2, [pc, #292]	; (800173c <hhrs+0x19c>)
+ 8001616:	2101      	movs	r1, #1
+ 8001618:	2002      	movs	r0, #2
+ 800161a:	f7fe ff75 	bl	8000508 <LCD_Cadena>
+ 800161e:	e089      	b.n	8001734 <hhrs+0x194>
+				        	    case 1: LCD_Cadena(2,1,"01"); break;
+ 8001620:	4a47      	ldr	r2, [pc, #284]	; (8001740 <hhrs+0x1a0>)
+ 8001622:	2101      	movs	r1, #1
+ 8001624:	2002      	movs	r0, #2
+ 8001626:	f7fe ff6f 	bl	8000508 <LCD_Cadena>
+ 800162a:	e083      	b.n	8001734 <hhrs+0x194>
+				        	    case 2: LCD_Cadena(2,1,"02"); break;
+ 800162c:	4a45      	ldr	r2, [pc, #276]	; (8001744 <hhrs+0x1a4>)
+ 800162e:	2101      	movs	r1, #1
+ 8001630:	2002      	movs	r0, #2
+ 8001632:	f7fe ff69 	bl	8000508 <LCD_Cadena>
+ 8001636:	e07d      	b.n	8001734 <hhrs+0x194>
+				                case 3: LCD_Cadena(2,1,"03"); break;
+ 8001638:	4a43      	ldr	r2, [pc, #268]	; (8001748 <hhrs+0x1a8>)
+ 800163a:	2101      	movs	r1, #1
+ 800163c:	2002      	movs	r0, #2
+ 800163e:	f7fe ff63 	bl	8000508 <LCD_Cadena>
+ 8001642:	e077      	b.n	8001734 <hhrs+0x194>
+				        	    case 4: LCD_Cadena(2,1,"04"); break;
+ 8001644:	4a41      	ldr	r2, [pc, #260]	; (800174c <hhrs+0x1ac>)
+ 8001646:	2101      	movs	r1, #1
+ 8001648:	2002      	movs	r0, #2
+ 800164a:	f7fe ff5d 	bl	8000508 <LCD_Cadena>
+ 800164e:	e071      	b.n	8001734 <hhrs+0x194>
+				        	    case 5: LCD_Cadena(2,1,"05"); break;
+ 8001650:	4a3f      	ldr	r2, [pc, #252]	; (8001750 <hhrs+0x1b0>)
+ 8001652:	2101      	movs	r1, #1
+ 8001654:	2002      	movs	r0, #2
+ 8001656:	f7fe ff57 	bl	8000508 <LCD_Cadena>
+ 800165a:	e06b      	b.n	8001734 <hhrs+0x194>
+				        	    case 6: LCD_Cadena(2,1,"06"); break;
+ 800165c:	4a3d      	ldr	r2, [pc, #244]	; (8001754 <hhrs+0x1b4>)
+ 800165e:	2101      	movs	r1, #1
+ 8001660:	2002      	movs	r0, #2
+ 8001662:	f7fe ff51 	bl	8000508 <LCD_Cadena>
+ 8001666:	e065      	b.n	8001734 <hhrs+0x194>
+				        	    case 7: LCD_Cadena(2,1,"07"); break;
+ 8001668:	4a3b      	ldr	r2, [pc, #236]	; (8001758 <hhrs+0x1b8>)
+ 800166a:	2101      	movs	r1, #1
+ 800166c:	2002      	movs	r0, #2
+ 800166e:	f7fe ff4b 	bl	8000508 <LCD_Cadena>
+ 8001672:	e05f      	b.n	8001734 <hhrs+0x194>
+				                case 8: LCD_Cadena(2,1,"08"); break;
+ 8001674:	4a39      	ldr	r2, [pc, #228]	; (800175c <hhrs+0x1bc>)
+ 8001676:	2101      	movs	r1, #1
+ 8001678:	2002      	movs	r0, #2
+ 800167a:	f7fe ff45 	bl	8000508 <LCD_Cadena>
+ 800167e:	e059      	b.n	8001734 <hhrs+0x194>
+				        	    case 9: LCD_Cadena(2,1,"09"); break;
+ 8001680:	4a37      	ldr	r2, [pc, #220]	; (8001760 <hhrs+0x1c0>)
+ 8001682:	2101      	movs	r1, #1
+ 8001684:	2002      	movs	r0, #2
+ 8001686:	f7fe ff3f 	bl	8000508 <LCD_Cadena>
+ 800168a:	e053      	b.n	8001734 <hhrs+0x194>
+				        	    case 10: LCD_Cadena(2,1,"10"); break;
+ 800168c:	4a35      	ldr	r2, [pc, #212]	; (8001764 <hhrs+0x1c4>)
+ 800168e:	2101      	movs	r1, #1
+ 8001690:	2002      	movs	r0, #2
+ 8001692:	f7fe ff39 	bl	8000508 <LCD_Cadena>
+ 8001696:	e04d      	b.n	8001734 <hhrs+0x194>
+				        	    case 11: LCD_Cadena(2,1,"11"); break;
+ 8001698:	4a33      	ldr	r2, [pc, #204]	; (8001768 <hhrs+0x1c8>)
+ 800169a:	2101      	movs	r1, #1
+ 800169c:	2002      	movs	r0, #2
+ 800169e:	f7fe ff33 	bl	8000508 <LCD_Cadena>
+ 80016a2:	e047      	b.n	8001734 <hhrs+0x194>
+				        	    case 12: LCD_Cadena(2,1,"12"); break;
+ 80016a4:	4a31      	ldr	r2, [pc, #196]	; (800176c <hhrs+0x1cc>)
+ 80016a6:	2101      	movs	r1, #1
+ 80016a8:	2002      	movs	r0, #2
+ 80016aa:	f7fe ff2d 	bl	8000508 <LCD_Cadena>
+ 80016ae:	e041      	b.n	8001734 <hhrs+0x194>
+				                case 13: LCD_Cadena(2,1,"13"); break;
+ 80016b0:	4a2f      	ldr	r2, [pc, #188]	; (8001770 <hhrs+0x1d0>)
+ 80016b2:	2101      	movs	r1, #1
+ 80016b4:	2002      	movs	r0, #2
+ 80016b6:	f7fe ff27 	bl	8000508 <LCD_Cadena>
+ 80016ba:	e03b      	b.n	8001734 <hhrs+0x194>
+				        	    case 14: LCD_Cadena(2,1,"14"); break;
+ 80016bc:	4a2d      	ldr	r2, [pc, #180]	; (8001774 <hhrs+0x1d4>)
+ 80016be:	2101      	movs	r1, #1
+ 80016c0:	2002      	movs	r0, #2
+ 80016c2:	f7fe ff21 	bl	8000508 <LCD_Cadena>
+ 80016c6:	e035      	b.n	8001734 <hhrs+0x194>
+				                case 15: LCD_Cadena(2,1,"15"); break;
+ 80016c8:	4a2b      	ldr	r2, [pc, #172]	; (8001778 <hhrs+0x1d8>)
+ 80016ca:	2101      	movs	r1, #1
+ 80016cc:	2002      	movs	r0, #2
+ 80016ce:	f7fe ff1b 	bl	8000508 <LCD_Cadena>
+ 80016d2:	e02f      	b.n	8001734 <hhrs+0x194>
+				                case 16: LCD_Cadena(2,1,"16"); break;
+ 80016d4:	4a29      	ldr	r2, [pc, #164]	; (800177c <hhrs+0x1dc>)
+ 80016d6:	2101      	movs	r1, #1
+ 80016d8:	2002      	movs	r0, #2
+ 80016da:	f7fe ff15 	bl	8000508 <LCD_Cadena>
+ 80016de:	e029      	b.n	8001734 <hhrs+0x194>
+				        	    case 17: LCD_Cadena(2,1,"17"); break;
+ 80016e0:	4a27      	ldr	r2, [pc, #156]	; (8001780 <hhrs+0x1e0>)
+ 80016e2:	2101      	movs	r1, #1
+ 80016e4:	2002      	movs	r0, #2
+ 80016e6:	f7fe ff0f 	bl	8000508 <LCD_Cadena>
+ 80016ea:	e023      	b.n	8001734 <hhrs+0x194>
+				                case 18: LCD_Cadena(2,1,"18"); break;
+ 80016ec:	4a25      	ldr	r2, [pc, #148]	; (8001784 <hhrs+0x1e4>)
+ 80016ee:	2101      	movs	r1, #1
+ 80016f0:	2002      	movs	r0, #2
+ 80016f2:	f7fe ff09 	bl	8000508 <LCD_Cadena>
+ 80016f6:	e01d      	b.n	8001734 <hhrs+0x194>
+				                case 19: LCD_Cadena(2,1,"19"); break;
+ 80016f8:	4a23      	ldr	r2, [pc, #140]	; (8001788 <hhrs+0x1e8>)
+ 80016fa:	2101      	movs	r1, #1
+ 80016fc:	2002      	movs	r0, #2
+ 80016fe:	f7fe ff03 	bl	8000508 <LCD_Cadena>
+ 8001702:	e017      	b.n	8001734 <hhrs+0x194>
+				        	    case 20: LCD_Cadena(2,1,"20"); break;
+ 8001704:	4a21      	ldr	r2, [pc, #132]	; (800178c <hhrs+0x1ec>)
+ 8001706:	2101      	movs	r1, #1
+ 8001708:	2002      	movs	r0, #2
+ 800170a:	f7fe fefd 	bl	8000508 <LCD_Cadena>
+ 800170e:	e011      	b.n	8001734 <hhrs+0x194>
+				                case 21: LCD_Cadena(2,1,"21"); break;
+ 8001710:	4a1f      	ldr	r2, [pc, #124]	; (8001790 <hhrs+0x1f0>)
+ 8001712:	2101      	movs	r1, #1
+ 8001714:	2002      	movs	r0, #2
+ 8001716:	f7fe fef7 	bl	8000508 <LCD_Cadena>
+ 800171a:	e00b      	b.n	8001734 <hhrs+0x194>
+				        	    case 22: LCD_Cadena(2,1,"22"); break;
+ 800171c:	4a1d      	ldr	r2, [pc, #116]	; (8001794 <hhrs+0x1f4>)
+ 800171e:	2101      	movs	r1, #1
+ 8001720:	2002      	movs	r0, #2
+ 8001722:	f7fe fef1 	bl	8000508 <LCD_Cadena>
+ 8001726:	e005      	b.n	8001734 <hhrs+0x194>
+				        	    case 23: LCD_Cadena(2,1,"23"); break;
+ 8001728:	4a1b      	ldr	r2, [pc, #108]	; (8001798 <hhrs+0x1f8>)
+ 800172a:	2101      	movs	r1, #1
+ 800172c:	2002      	movs	r0, #2
+ 800172e:	f7fe feeb 	bl	8000508 <LCD_Cadena>
+ 8001732:	bf00      	nop
+
+				       }
+
+}
+ 8001734:	bf00      	nop
+ 8001736:	bd80      	pop	{r7, pc}
+ 8001738:	20000028 	.word	0x20000028
+ 800173c:	080018f4 	.word	0x080018f4
+ 8001740:	080018f8 	.word	0x080018f8
+ 8001744:	080018fc 	.word	0x080018fc
+ 8001748:	08001900 	.word	0x08001900
+ 800174c:	08001904 	.word	0x08001904
+ 8001750:	08001908 	.word	0x08001908
+ 8001754:	0800190c 	.word	0x0800190c
+ 8001758:	08001910 	.word	0x08001910
+ 800175c:	08001914 	.word	0x08001914
+ 8001760:	08001918 	.word	0x08001918
+ 8001764:	0800191c 	.word	0x0800191c
+ 8001768:	08001920 	.word	0x08001920
+ 800176c:	08001924 	.word	0x08001924
+ 8001770:	08001928 	.word	0x08001928
+ 8001774:	0800192c 	.word	0x0800192c
+ 8001778:	08001930 	.word	0x08001930
+ 800177c:	08001934 	.word	0x08001934
+ 8001780:	08001938 	.word	0x08001938
+ 8001784:	0800193c 	.word	0x0800193c
+ 8001788:	08001940 	.word	0x08001940
+ 800178c:	08001944 	.word	0x08001944
+ 8001790:	08001948 	.word	0x08001948
+ 8001794:	0800194c 	.word	0x0800194c
+ 8001798:	08001950 	.word	0x08001950
+
+0800179c <SystemInit>:
+  *         configuration.
+  * @param  None
+  * @retval None
+  */
+void SystemInit(void)
+{
+ 800179c:	b480      	push	{r7}
+ 800179e:	af00      	add	r7, sp, #0
+  /* FPU settings ------------------------------------------------------------*/
+  #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
+    SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  /* set CP10 and CP11 Full Access */
+ 80017a0:	4b16      	ldr	r3, [pc, #88]	; (80017fc <SystemInit+0x60>)
+ 80017a2:	f8d3 3088 	ldr.w	r3, [r3, #136]	; 0x88
+ 80017a6:	4a15      	ldr	r2, [pc, #84]	; (80017fc <SystemInit+0x60>)
+ 80017a8:	f443 0370 	orr.w	r3, r3, #15728640	; 0xf00000
+ 80017ac:	f8c2 3088 	str.w	r3, [r2, #136]	; 0x88
+  #endif
+  /* Reset the RCC clock configuration to the default reset state ------------*/
+  /* Set HSION bit */
+  RCC->CR |= (uint32_t)0x00000001;
+ 80017b0:	4b13      	ldr	r3, [pc, #76]	; (8001800 <SystemInit+0x64>)
+ 80017b2:	681b      	ldr	r3, [r3, #0]
+ 80017b4:	4a12      	ldr	r2, [pc, #72]	; (8001800 <SystemInit+0x64>)
+ 80017b6:	f043 0301 	orr.w	r3, r3, #1
+ 80017ba:	6013      	str	r3, [r2, #0]
+
+  /* Reset CFGR register */
+  RCC->CFGR = 0x00000000;
+ 80017bc:	4b10      	ldr	r3, [pc, #64]	; (8001800 <SystemInit+0x64>)
+ 80017be:	2200      	movs	r2, #0
+ 80017c0:	609a      	str	r2, [r3, #8]
+
+  /* Reset HSEON, CSSON and PLLON bits */
+  RCC->CR &= (uint32_t)0xFEF6FFFF;
+ 80017c2:	4b0f      	ldr	r3, [pc, #60]	; (8001800 <SystemInit+0x64>)
+ 80017c4:	681b      	ldr	r3, [r3, #0]
+ 80017c6:	4a0e      	ldr	r2, [pc, #56]	; (8001800 <SystemInit+0x64>)
+ 80017c8:	f023 7384 	bic.w	r3, r3, #17301504	; 0x1080000
+ 80017cc:	f423 3380 	bic.w	r3, r3, #65536	; 0x10000
+ 80017d0:	6013      	str	r3, [r2, #0]
+
+  /* Reset PLLCFGR register */
+  RCC->PLLCFGR = 0x24003010;
+ 80017d2:	4b0b      	ldr	r3, [pc, #44]	; (8001800 <SystemInit+0x64>)
+ 80017d4:	4a0b      	ldr	r2, [pc, #44]	; (8001804 <SystemInit+0x68>)
+ 80017d6:	605a      	str	r2, [r3, #4]
+
+  /* Reset HSEBYP bit */
+  RCC->CR &= (uint32_t)0xFFFBFFFF;
+ 80017d8:	4b09      	ldr	r3, [pc, #36]	; (8001800 <SystemInit+0x64>)
+ 80017da:	681b      	ldr	r3, [r3, #0]
+ 80017dc:	4a08      	ldr	r2, [pc, #32]	; (8001800 <SystemInit+0x64>)
+ 80017de:	f423 2380 	bic.w	r3, r3, #262144	; 0x40000
+ 80017e2:	6013      	str	r3, [r2, #0]
+
+  /* Disable all interrupts */
+  RCC->CIR = 0x00000000;
+ 80017e4:	4b06      	ldr	r3, [pc, #24]	; (8001800 <SystemInit+0x64>)
+ 80017e6:	2200      	movs	r2, #0
+ 80017e8:	60da      	str	r2, [r3, #12]
+
+  /* Configure the Vector Table location add offset address ------------------*/
+#ifdef VECT_TAB_SRAM
+  SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
+#else
+  SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
+ 80017ea:	4b04      	ldr	r3, [pc, #16]	; (80017fc <SystemInit+0x60>)
+ 80017ec:	f04f 6200 	mov.w	r2, #134217728	; 0x8000000
+ 80017f0:	609a      	str	r2, [r3, #8]
+#endif
+}
+ 80017f2:	bf00      	nop
+ 80017f4:	46bd      	mov	sp, r7
+ 80017f6:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80017fa:	4770      	bx	lr
+ 80017fc:	e000ed00 	.word	0xe000ed00
+ 8001800:	40023800 	.word	0x40023800
+ 8001804:	24003010 	.word	0x24003010
+
+08001808 <Reset_Handler>:
+
+  .section .text.Reset_Handler
+  .weak Reset_Handler
+  .type Reset_Handler, %function
+Reset_Handler:
+  ldr   r0, =_estack
+ 8001808:	480d      	ldr	r0, [pc, #52]	; (8001840 <LoopForever+0x2>)
+  mov   sp, r0          /* set stack pointer */
+ 800180a:	4685      	mov	sp, r0
+/* Call the clock system initialization function.*/
+  bl  SystemInit
+ 800180c:	f7ff ffc6 	bl	800179c <SystemInit>
+
+/* Copy the data segment initializers from flash to SRAM */
+  ldr r0, =_sdata
+ 8001810:	480c      	ldr	r0, [pc, #48]	; (8001844 <LoopForever+0x6>)
+  ldr r1, =_edata
+ 8001812:	490d      	ldr	r1, [pc, #52]	; (8001848 <LoopForever+0xa>)
+  ldr r2, =_sidata
+ 8001814:	4a0d      	ldr	r2, [pc, #52]	; (800184c <LoopForever+0xe>)
+  movs r3, #0
+ 8001816:	2300      	movs	r3, #0
+  b LoopCopyDataInit
+ 8001818:	e002      	b.n	8001820 <LoopCopyDataInit>
+
+0800181a <CopyDataInit>:
+
+CopyDataInit:
+  ldr r4, [r2, r3]
+ 800181a:	58d4      	ldr	r4, [r2, r3]
+  str r4, [r0, r3]
+ 800181c:	50c4      	str	r4, [r0, r3]
+  adds r3, r3, #4
+ 800181e:	3304      	adds	r3, #4
+
+08001820 <LoopCopyDataInit>:
+
+LoopCopyDataInit:
+  adds r4, r0, r3
+ 8001820:	18c4      	adds	r4, r0, r3
+  cmp r4, r1
+ 8001822:	428c      	cmp	r4, r1
+  bcc CopyDataInit
+ 8001824:	d3f9      	bcc.n	800181a <CopyDataInit>
+
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
+ 8001826:	4a0a      	ldr	r2, [pc, #40]	; (8001850 <LoopForever+0x12>)
+  ldr r4, =_ebss
+ 8001828:	4c0a      	ldr	r4, [pc, #40]	; (8001854 <LoopForever+0x16>)
+  movs r3, #0
+ 800182a:	2300      	movs	r3, #0
+  b LoopFillZerobss
+ 800182c:	e001      	b.n	8001832 <LoopFillZerobss>
+
+0800182e <FillZerobss>:
+
+FillZerobss:
+  str  r3, [r2]
+ 800182e:	6013      	str	r3, [r2, #0]
+  adds r2, r2, #4
+ 8001830:	3204      	adds	r2, #4
+
+08001832 <LoopFillZerobss>:
+
+LoopFillZerobss:
+  cmp r2, r4
+ 8001832:	42a2      	cmp	r2, r4
+  bcc FillZerobss
+ 8001834:	d3fb      	bcc.n	800182e <FillZerobss>
+
+/* Call static constructors */
+  bl __libc_init_array
+ 8001836:	f000 f811 	bl	800185c <__libc_init_array>
+/* Call the application's entry point.*/
+  bl main
+ 800183a:	f7fe fe85 	bl	8000548 <main>
+
+0800183e <LoopForever>:
+
+LoopForever:
+    b LoopForever
+ 800183e:	e7fe      	b.n	800183e <LoopForever>
+  ldr   r0, =_estack
+ 8001840:	20030000 	.word	0x20030000
+  ldr r0, =_sdata
+ 8001844:	20000000 	.word	0x20000000
+  ldr r1, =_edata
+ 8001848:	20000004 	.word	0x20000004
+  ldr r2, =_sidata
+ 800184c:	080019e8 	.word	0x080019e8
+  ldr r2, =_sbss
+ 8001850:	20000004 	.word	0x20000004
+  ldr r4, =_ebss
+ 8001854:	20000034 	.word	0x20000034
+
+08001858 <ADC_IRQHandler>:
+ * @retval : None
+*/
+  .section .text.Default_Handler,"ax",%progbits
+Default_Handler:
+Infinite_Loop:
+  b Infinite_Loop
+ 8001858:	e7fe      	b.n	8001858 <ADC_IRQHandler>
+	...
+
+0800185c <__libc_init_array>:
+ 800185c:	b570      	push	{r4, r5, r6, lr}
+ 800185e:	4d0d      	ldr	r5, [pc, #52]	; (8001894 <__libc_init_array+0x38>)
+ 8001860:	4c0d      	ldr	r4, [pc, #52]	; (8001898 <__libc_init_array+0x3c>)
+ 8001862:	1b64      	subs	r4, r4, r5
+ 8001864:	10a4      	asrs	r4, r4, #2
+ 8001866:	2600      	movs	r6, #0
+ 8001868:	42a6      	cmp	r6, r4
+ 800186a:	d109      	bne.n	8001880 <__libc_init_array+0x24>
+ 800186c:	4d0b      	ldr	r5, [pc, #44]	; (800189c <__libc_init_array+0x40>)
+ 800186e:	4c0c      	ldr	r4, [pc, #48]	; (80018a0 <__libc_init_array+0x44>)
+ 8001870:	f000 f818 	bl	80018a4 <_init>
+ 8001874:	1b64      	subs	r4, r4, r5
+ 8001876:	10a4      	asrs	r4, r4, #2
+ 8001878:	2600      	movs	r6, #0
+ 800187a:	42a6      	cmp	r6, r4
+ 800187c:	d105      	bne.n	800188a <__libc_init_array+0x2e>
+ 800187e:	bd70      	pop	{r4, r5, r6, pc}
+ 8001880:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8001884:	4798      	blx	r3
+ 8001886:	3601      	adds	r6, #1
+ 8001888:	e7ee      	b.n	8001868 <__libc_init_array+0xc>
+ 800188a:	f855 3b04 	ldr.w	r3, [r5], #4
+ 800188e:	4798      	blx	r3
+ 8001890:	3601      	adds	r6, #1
+ 8001892:	e7f2      	b.n	800187a <__libc_init_array+0x1e>
+ 8001894:	080019e0 	.word	0x080019e0
+ 8001898:	080019e0 	.word	0x080019e0
+ 800189c:	080019e0 	.word	0x080019e0
+ 80018a0:	080019e4 	.word	0x080019e4
+
+080018a4 <_init>:
+ 80018a4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 80018a6:	bf00      	nop
+ 80018a8:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80018aa:	bc08      	pop	{r3}
+ 80018ac:	469e      	mov	lr, r3
+ 80018ae:	4770      	bx	lr
+
+080018b0 <_fini>:
+ 80018b0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 80018b2:	bf00      	nop
+ 80018b4:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80018b6:	bc08      	pop	{r3}
+ 80018b8:	469e      	mov	lr, r3
+ 80018ba:	4770      	bx	lr
